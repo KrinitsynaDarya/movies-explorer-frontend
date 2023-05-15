@@ -1,0 +1,18 @@
+.page-container {
+  padding: 0;
+  margin: 0 auto;
+  max-width: 1140px;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 1279px) {
+  .page-container {
+    max-width: 708px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .page-container {
+    max-width: 300px;
+  }
+}

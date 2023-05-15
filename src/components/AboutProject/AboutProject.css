@@ -1,0 +1,159 @@
+.project {
+  padding: 110px 0 0;
+  margin: auto;
+}
+
+.project__title {
+  margin: 0;
+  border-bottom: #000 solid 1px;
+}
+
+.project__info {
+  padding: 70px 0 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+}
+.project__info-item {
+  padding-right: 40px;
+  max-width: 550px;
+}
+
+.project__info-item:last-child {
+  padding-right: 0;
+}
+
+.project__info-title {
+  margin: 0;
+  padding: 0 0 26px;
+
+  font-family: "Inter", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.04em;
+}
+
+.project__info-description {
+  margin: 0;
+  padding: 0;
+
+  font-family: "Inter", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.project__steps {
+  padding: 110px 0;
+  margin: 0;
+  display: grid;
+  align-items: center;
+  text-align: center;
+  grid-template-columns: 228px 912px;
+  grid-template-rows: 36px 17px;
+  row-gap: 14px;
+}
+
+.project__step {
+  color: #a0a0a0;
+  margin: 0;
+  padding: 0;
+  min-height: 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  font-family: "Inter", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+}
+
+.project__frontend {
+  margin: 0;
+  padding: 0;
+  font-weight: 400;
+  background-color: #f2f2f2;
+  color: #000;
+}
+
+.project__backend {
+  margin: 0;
+  padding: 0;
+  font-weight: 400;
+  background-color: black;
+  color: white;
+}
+
+@media (max-width: 1279px) {
+  .project {
+    max-width: 668px;
+    padding: 90px 0 0;
+  }
+  .project__info-description {
+    font-size: 12px;
+    line-height: 18px;
+  }
+  .project__info-title {
+    margin: 0;
+    padding: 0 0 22px;
+  }
+
+  .project__steps {
+    padding: 93px 0;
+    grid-template-columns: 140px 528px;
+  }
+
+  .project__step {
+    font-weight: 400;
+  }
+}
+
+@media (max-width: 767px) {
+  .project {
+    max-width: 284px;
+    padding: 70px 0;
+  }
+
+  .project__info {
+    padding: 60px 0;
+    flex-direction: column;
+  }
+
+  .project__info-title {
+    margin: 0;
+    padding: 0 0 16px;
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .project__info-description {
+    font-size: 11px;
+    line-height: 16px;
+  }
+  .project__info-item {
+    padding: 0 0 56px;
+  }
+
+  .project__info-item:last-child {
+    padding: 0;
+  }
+
+  .project__steps {
+    padding: 0;
+    row-gap: 10px;
+    grid-template-columns: 100px 184px;
+    grid-template-rows: 35px 13px;
+  }
+
+  .project__step {
+    font-size: 11px;
+    line-height: 13px;
+  }
+}
