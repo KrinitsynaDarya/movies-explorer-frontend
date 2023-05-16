@@ -1,4 +1,5 @@
-{
+{ 
+  "homepage": "https://movies.krinitsyna.nomoredomains.monster",
   "name": "movies-explorer-frontend",
   "version": "0.1.0",
   "private": true,

@@ -1,3 +1,15 @@
+# movies-explorer-frontend
+
+Репозиторий для приложения проекта `Movies`, включающий фронтенд часть приложения.
+
+Адрес репозитория: https://github.com/KrinitsynaDarya/movies-explorer-frontend.git
+
+## Ссылки на проект
+
+IP 130.193.42.29
+
+Frontend https://movies.krinitsyna.nomoredomains.monster
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
