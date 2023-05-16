@@ -7,8 +7,8 @@ import ImgYearsDesign from "../../images/100-years-design.jpg";
 import ImgBanksy from "../../images/chasing-banksy.jpg";
 import ImgBaskiya from "../../images/baskiya-exploison-reality.jpg";
 import ImgFreedom from "../../images/run-freedom.jpg";
-import ImgBooksellers from "../../images/book-sellers.jpg";
-import ImgGermany from "../../images/think-germany-night.jpg";
+//import ImgBooksellers from "../../images/book-sellers.jpg";
+//import ImgGermany from "../../images/think-germany-night.jpg";
 
 function MoviesCardList({
   onCardClick,
@@ -17,7 +17,7 @@ function MoviesCardList({
   isSavedPage,
   isShortFilm,
 }) {
-  const [isLoading, setisLoading] = React.useState(true);
+  //const [isLoading, setisLoading] = React.useState(true);
 
   const cards = [
     {
@@ -32,7 +32,7 @@ function MoviesCardList({
       name: "Киноальманах «100 лет дизайна»",
       duration: "1ч 42м",
       link: ImgYearsDesign,
-      short: true,
+      short: false,
     },
     {
       id: 3,
@@ -84,7 +84,7 @@ function MoviesCardList({
       name: "Киноальманах «100 лет дизайна»",
       duration: "1ч 42м",
       link: ImgYearsDesign,
-      short: true,
+      short: false,
     },
     /* {
       id: 3,
@@ -98,11 +98,14 @@ function MoviesCardList({
   return (
     <section className="movies-card-list">
       {!isSavedPage
-        ? cards.map((card) => {
-            if (card.short === isShortFilm)
+        ? cards
+            .filter((card) => {
+              return card.short === isShortFilm;
+            })
+            .map((card) => {
               return (
                 <MoviesCard
-                  key={card._id}
+                  key={card.id}
                   card={card}
                   onCardClick={onCardClick}
                   onCardLike={onCardLike}
@@ -111,12 +114,15 @@ function MoviesCardList({
                   savedCards={savedCards}
                 />
               );
-          })
-        : savedCards.map((card) => {
-            if (card.short === isShortFilm)
+            })
+        : savedCards
+            .filter((card) => {
+              return card.short === isShortFilm;
+            })
+            .map((card) => {
               return (
                 <MoviesCard
-                  key={card._id}
+                  key={card.id}
                   card={card}
                   onCardClick={onCardClick}
                   onCardLike={onCardLike}
@@ -125,7 +131,7 @@ function MoviesCardList({
                   savedCards={savedCards}
                 />
               );
-          })}
+            })}
     </section>
   );
 }

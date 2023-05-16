@@ -10,15 +10,13 @@ import PageContainer from "../PageContainer/PageContainer";
 function Main({ loggedIn, isMenuOpen, toggleMenu }) {
   return (
     <Layout loggedIn={false} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu}>
-      <main className="main">
-        <Promo />
-        <NavTab />
-        <AboutProject />
-        <Techs />
-        <AboutMe />
-      </main>
+      <Promo />
+      <NavTab />
+      <AboutProject />
+      <Techs />
+      <AboutMe />
     </Layout>
   );
 }
 
-export default Main; /*  */
+export default Main; /*     </main>    <main className="main"> */

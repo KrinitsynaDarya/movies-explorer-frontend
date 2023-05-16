@@ -20,7 +20,7 @@ const Layout = (props) => {
             toggleMenu={toggleMenu}
           />
         )}
-        {children}
+        <main className="main">{children}</main>
       </div>
       {hasFooter && <Footer />}
     </div>

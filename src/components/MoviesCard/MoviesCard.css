@@ -4,7 +4,7 @@
   grid-template-rows: 35px 43px 12px;
   display: flex;
   flex-direction: row;
-  align-items: start;
+  align-items: flex-start;
   margin: 0;
   /*padding: 22px;*/
   position: relative;
