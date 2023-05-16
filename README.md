@@ -8,6 +8,8 @@
 
 IP 130.193.42.29
 
+Макет https://drive.google.com/file/d/13V8xFjkD4lSV_k6Tti8Bur4y_goZelxZ/view?usp=share_link
+
 Frontend https://movies.krinitsyna.nomoredomains.monster
 
 # Getting Started with Create React App
