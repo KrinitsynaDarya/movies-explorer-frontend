@@ -23,6 +23,8 @@ function AboutMe() {
               <a
                 className="author__github"
                 href="https://github.com/KrinitsynaDarya"
+                target="_blank"
+                rel="noreferrer"
               >
                 Github
               </a>

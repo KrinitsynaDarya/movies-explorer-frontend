@@ -25,6 +25,7 @@ function SearchForm({ handleCheckbox, isShortFilm }) {
               type="text"
               className="search-form__input"
               placeholder="Фильм"
+              required
             ></input>
           </div>
           <button type="submit" className="search-form__button">

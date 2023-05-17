@@ -66,6 +66,7 @@
   font-size: 14px;
   line-height: 17px;
   text-decoration: none;
+  color: #000;
 }
 
 @media (max-width: 1279px) {

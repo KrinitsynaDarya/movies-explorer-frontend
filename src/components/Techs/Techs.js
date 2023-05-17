@@ -1,7 +1,7 @@
 import "./Techs.css";
 import PageContainer from "../PageContainer/PageContainer";
 
-function Techs({}) {
+function Techs() {
   return (
     <section className="techs" id="techs">
       <PageContainer>
