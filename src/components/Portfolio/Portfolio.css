@@ -57,6 +57,10 @@
   letter-spacing: -0.04em;
 }
 
+.portfolio__link:hover {
+  opacity: 0.5;
+}
+
 @media screen and (max-width: 1279px) {
   .portfolio__link {
     font-size: 28px;
