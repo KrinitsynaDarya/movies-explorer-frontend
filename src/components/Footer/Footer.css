@@ -1,0 +1,99 @@
+.footer {
+  padding: 79px 0 0;
+}
+
+.footer__title {
+  margin: 0;
+  color: #a0a0a0;
+  padding-bottom: 20px;
+  font-family: "Inter", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  /* identical to box height */
+  text-align: center;
+  border-bottom: #e8e8e8 solid 1px;
+}
+.footer__year {
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.footer__menu {
+  padding: 20px 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer__links {
+  margin: 0;
+  padding: 0;
+
+  list-style-type: none;
+  display: grid;
+  column-gap: 20px;
+  grid-template-columns: repeat(2, max-content);
+  justify-items: center;
+  align-items: center;
+}
+
+.footer__link {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+
+  font-family: "Inter", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+
+  text-align: right;
+  color: #000000;
+}
+
+.footer__link-container {
+  margin: 0;
+  padding: 0;
+  display: flex;
+
+  justify-content: space-around;
+}
+
+@media (max-width: 767px) {
+  .footer__title {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .footer__menu {
+    padding: 0 0 20px;
+    flex-direction: column-reverse;
+  }
+
+  .footer__links {
+    padding: 30px 0;
+    grid-template-columns: repeat(1, max-content);
+    row-gap: 12px;
+  }
+
+  .footer__link {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .footer__year {
+    font-size: 12px;
+    line-height: 15px;
+
+    color: #a0a0a0;
+  }
+}
