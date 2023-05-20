@@ -3,16 +3,25 @@ import "./SearchForm.css";
 import { useNavigate } from "react-router-dom";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
-function SearchForm({ handleCheckbox, isShortFilm }) {
-  const navigate = useNavigate();
-
-  const onSubmit = () => {
-    navigate("/", { replace: true });
+function SearchForm({
+  handleCheckbox,
+  isShortFilm,
+  onSubmit,
+  inputString,
+  setInputString,
+}) {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit();
   };
+
+  function handleSearchChange(e) {
+    setInputString(e.target.value);
+  }
 
   return (
     <section className="search-form">
-      <form className="search-form__panel" onSubmit={onSubmit}>
+      <form className="search-form__panel" onSubmit={handleSubmit}>
         <div className="search-form__search-container">
           <div className="search-form__input-container">
             <img
@@ -24,7 +33,8 @@ function SearchForm({ handleCheckbox, isShortFilm }) {
               type="text"
               className="search-form__input"
               placeholder="Фильм"
-              required
+              requiredonChange={handleSearchChange}
+              value={inputString || ""}
             ></input>
           </div>
           <button type="submit" className="search-form__button">

@@ -13,12 +13,12 @@ function Movies({
   handleCheckbox,
   isShortFilm,
 }) {
-  const [movies, setMovies] = useState();
-  const [search, setSearch] = useState();
-  const [filterString, setFilterString] = useState();
-  const [isShort, setIsShort] = useState();
-  const [page, setPage] = useState();
-  const [screenWidth, setScreenWidth] = useState();
+  const [movies, setMovies] = useState([]);
+  const [inputString, setInputString] = useState("");
+  const [filterString, setFilterString] = useState(null);
+  const [isShort, setIsShort] = useState(false);
+  const [page, setPage] = useState(1);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
   function debounce(func, timeout = 300) {
     let timer;
@@ -45,6 +45,7 @@ function Movies({
         .getInitialCards()
         .then((initialMovies) => {
           localStorage.setItem("movies", JSON.stringify(initialMovies));
+          setMovies(JSON.parse(localStorage.getItem("movies")));
         })
         .catch((err) => {
           console.log(`Ошибка: ${err}`);
@@ -59,7 +60,7 @@ function Movies({
     const savedIsShort = localStorage.getItem("isShort", String(isShort));
 
     if (savedsSearch) {
-      setSearch(savedsSearch);
+      setInputString(savedsSearch);
       setFilterString(savedsSearch);
     }
 
@@ -67,20 +68,6 @@ function Movies({
       setIsShort(savedIsShort);
     }
   });
-
-  React.useEffect(() => {
-    const savedsSearch = localStorage.getItem("search", filterString);
-    const savedIsShort = localStorage.getItem("isShort", String(isShort));
-
-    if (savedsSearch) {
-      setSearch(savedsSearch);
-      setFilterString(savedsSearch);
-    }
-
-    if (savedIsShort) {
-      setIsShort(savedIsShort);
-    }
-  }, []);
 
   React.useEffect(() => {
     window.addEventListener("resize", handleResize);
@@ -103,7 +90,7 @@ function Movies({
 
     localStorage.setItem("search", filterString);
     localStorage.setItem("isShort", String(isShort));
-    localStorage.setItem("movies", JSON.stringify(filtered));
+    //localStorage.setItem("movies", JSON.stringify(filtered));
 
     return filtered;
   }, [filterString, movies, isShort]);
@@ -113,6 +100,14 @@ function Movies({
     return filteredFilms.slice(0, filmsCount * page);
   }, [filteredFilms, page, screenWidth]);
 
+  const handleSubmit = useCallback(() => {
+    setFilterString(inputString);
+  }, [setInputString]);
+
+  const handleLoadMore = useCallback(() => {
+    setPage((prev) => prev + 1);
+  }, []);
+
   return (
     <Layout loggedIn={loggedIn} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu}>
       <section className="movies">
@@ -120,6 +115,9 @@ function Movies({
           <SearchForm
             handleCheckbox={handleCheckbox}
             isShortFilm={isShortFilm}
+            onSubmit={handleSubmit}
+            inputString={inputString}
+            setInputString={setInputString}
           />
           <MoviesCardList
             isSavedPage={false}
@@ -128,7 +126,9 @@ function Movies({
           />
           <div className="movies__more-container">
             {filmsToRender < filteredFilms && (
-              <button className="movies__more-button">Ещё</button>
+              <button className="movies__more-button" onClick={handleLoadMore}>
+                Ещё
+              </button>
             )}
           </div>
         </PageContainer>
