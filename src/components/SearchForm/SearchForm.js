@@ -12,7 +12,7 @@ function SearchForm({
 }) {
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit();
+    onSubmit(inputString);
   };
 
   function handleSearchChange(e) {
