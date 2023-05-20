@@ -33,7 +33,8 @@ function SearchForm({
               type="text"
               className="search-form__input"
               placeholder="Фильм"
-              requiredonChange={handleSearchChange}
+              required
+              onChange={handleSearchChange}
               value={inputString || ""}
             ></input>
           </div>
