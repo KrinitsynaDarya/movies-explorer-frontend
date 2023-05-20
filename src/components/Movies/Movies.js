@@ -31,9 +31,3 @@ function Movies({
 }
 
 export default Movies;
-/*         
-             <SearchForm
-            handleCheckbox={handleCheckbox}
-            isShortFilm={isShortFilm}
-          />
-*/

@@ -6,7 +6,6 @@ import Navigation from "../Navigation/Navigation";
 import PageContainer from "../PageContainer/PageContainer";
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
 import React from "react";
-import profileLogo from "../../images/profile-logo.svg";
 
 function Header({ loggedIn, isMenuOpen, toggleMenu }) {
   const headerLogged = (

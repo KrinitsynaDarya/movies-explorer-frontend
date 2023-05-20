@@ -1,7 +1,7 @@
 import "./AboutProject.css";
 import PageContainer from "../PageContainer/PageContainer";
 
-function AboutProject({ loggedIn, email, onLogout }) {
+function AboutProject() {
   return (
     <section className="project" id="project">
       <PageContainer>

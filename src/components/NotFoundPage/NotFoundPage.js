@@ -1,7 +1,7 @@
 import "./NotFoundPage.css";
 import { Link } from "react-router-dom";
 
-function NotFoundPage({ loggedIn, email, onLogout }) {
+function NotFoundPage() {
   return (
     <section className="not-found-page">
       <div className="not-found-page__container">

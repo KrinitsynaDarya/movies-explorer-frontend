@@ -1,5 +1,4 @@
 import searchLogo from "../../images/search-logo.svg";
-
 import "./SearchForm.css";
 import { useNavigate } from "react-router-dom";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";

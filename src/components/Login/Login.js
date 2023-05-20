@@ -1,11 +1,9 @@
 import React from "react";
 import "./Login.css";
 import { useFormWithValidation } from "../App/useForm";
-//import headerLogo from "../../images/header-logo.svg";
 import { Link } from "react-router-dom";
 import Layout from "../Layout/Layout";
 import Logo from "../Logo/Logo";
-import PageContainer from "../PageContainer/PageContainer";
 
 const Login = ({ onLogin, errorMessage, setErrorMessage }) => {
   const handleSubmit = (e) => {

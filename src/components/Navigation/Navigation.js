@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import profileLogo from "../../images/profile-logo.svg";
 import "./Navigation.css";
 
-function Navigation({ isBurger, isMenuOpen, onClose }) {
+function Navigation({ isBurger, onClose }) {
   const linkClassList = `navigation__link ${
     isBurger && "navigation__link_type_burger"
   }`;

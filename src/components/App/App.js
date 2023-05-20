@@ -83,19 +83,6 @@ function App() {
   const [userEmail, setUserEmail] = React.useState();
   const [isSucces, setIsSucces] = React.useState(false);
 
-  /* React.useEffect(() => {
-    if (loggedIn === false) return;
-    Promise.all([api.getUserInfo(), api.getInitialCards()])
-      .then(([userData, initialCards]) => {
-        setCurrentUser(userData);
-        setUserEmail(userData.email);
-        setCards(initialCards);
-      })
-      .catch((err) => {
-        console.log(`Ошибка: ${err}`);
-      });
-  }, [loggedIn]);*/
-
   React.useEffect(() => {
     tokenCheck();
   }, []);
@@ -201,7 +188,7 @@ function App() {
                   toggleMenu={toggleMenu}
                 />
               </>
-            } /* страница с профилем пользователя */
+            } /* главная страница */
           />
           <Route
             path="/movies"
@@ -214,7 +201,7 @@ function App() {
                 handleCheckbox={handleCheckbox}
                 isShortFilm={isShortFilm}
               />
-            }
+            } /* страница «Фильмы» */
           />
 
           <Route
@@ -228,7 +215,7 @@ function App() {
                 handleCheckbox={handleCheckbox}
                 isShortFilm={isShortFilm}
               />
-            }
+            } /* страница «Сохранённые фильмы» */
           />
 
           <Route
@@ -244,7 +231,7 @@ function App() {
                 errorMessage={errorMessage}
                 setErrorMessage={setErrorMessage}
               />
-            }
+            } /* страница с профилем пользователя */
           />
 
           <Route
@@ -269,7 +256,7 @@ function App() {
           />
           <Route
             path="*"
-            element={<NotFoundPage />} /* страница авторизации */
+            element={<NotFoundPage />} /* страница не найдена */
           />
         </Routes>
       </>
@@ -278,103 +265,3 @@ function App() {
 }
 
 export default App;
-/*
-return (
-  <CurrentUserContext.Provider value={currentUser}>
-    <>
-      <Header loggedIn={loggedIn} email={userEmail} onLogout={handleLogout} />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <ProtectedRouteElement
-              loggedIn={loggedIn}
-              element={Main}
-              onEditProfile={handleEditProfileClick}
-              onAddPlace={handleAddPlaceClick}
-              onEditAvatar={handleEditAvatarClick}
-              cards={cards}
-              onCardClick={handleCardClick}
-              onCardLike={handleCardLike}
-              onCardDelete={handleCardDelete}
-            />
-          }
-        />
-        <Route
-          path="/sign-up"
-          element={<Register onRegister={handleRegister} />}
-        />
-        <Route path="/sign-in" element={<Login onLogin={handleLogin} />} />
-      </Routes>
-
-      <Footer />
-      <ImagePopup
-        onClose={() => {
-          setSelectedCard(null);
-        }}
-        card={selectedCard}
-      />
-      <EditProfilePopup
-        isOpen={isEditProfilePopupOpen}
-        onClose={closeAllPopups}
-        onUpdateUser={handleUpdateUser}
-      />
-      <EditAvatarPopup
-        isOpen={isEditAvatarPopupOpen}
-        onClose={closeAllPopups}
-        onUpdateAvatar={handleUpdateAvatar}
-      />
-      <AddPlacePopup
-        isOpen={isAddPlacePopupOpen}
-        onClose={closeAllPopups}
-        onAddPlace={handleAddPlaceSubmit}
-      />
-      <InfoTooltip
-        isOpen={isInfoToolTipOpen}
-        onClose={closeAllPopups}
-        isSucces={isSucces}
-      />
-    </>
-  </CurrentUserContext.Provider>
-);
-
-
-          <Route
-            path="/movies"
-            element={
-              <Movies
-                loggedIn={loggedIn}
-                isMenuOpen={isMenuOpen}
-                toggleMenu={toggleMenu}
-                handleCheckbox={handleCheckbox}
-                isShortFilm={isShortFilm}
-              />
-            } //страница «Фильмы» 
-                      <Route
-            path="/profile"
-            element={
-              <Profile
-                loggedIn={loggedIn}
-                onUpdateUser={handleUpdateUser}
-                onLogout={handleLogout}
-                isMenuOpen={isMenuOpen}
-                toggleMenu={toggleMenu}
-                errorMessage={errorMessage}
-                setErrorMessage={setErrorMessage}
-              />
-            } // страница с профилем пользователя 
-
-              <Route
-            path="/saved-movies"
-            element={
-              <SavedMovies
-                loggedIn={loggedIn}
-                isMenuOpen={isMenuOpen}
-                toggleMenu={toggleMenu}
-                handleCheckbox={handleCheckbox}
-                isShortFilm={isShortFilm}
-              />
-            } // страница «Сохранённые фильмы» 
-          />
-          />
-*/
