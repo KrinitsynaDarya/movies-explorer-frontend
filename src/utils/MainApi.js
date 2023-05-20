@@ -76,7 +76,7 @@ class Api {
       headers: this._headers,
       body: JSON.stringify({
         name: userData.name,
-        about: userData.about,
+        email: userData.email,
       }),
       credentials: "include", // теперь куки посылаются вместе с запросом
     }).then((res) => this._checkResponse(res));
