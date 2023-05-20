@@ -15,6 +15,7 @@ import SavedMovies from "../SavedMovies/SavedMovies";
 
 import * as auth from "../../utils/Auth";
 import mainApi from "../../utils/MainApi";
+import ProtectedRouteElement from "../ProtectedRoute/ProtectedRoute";
 
 function App() {
   const navigate = useNavigate();
@@ -34,24 +35,6 @@ function App() {
       password: "12345678",
     });
   }, []);
-
-  /*function handleRegister(email, password) {
-    navigate("/signin", { replace: true });
-  }
-
-  function handleLogin(email, password) {
-    setLoggedIn(true);
-    navigate("/movies", { replace: true });
-  }
-
-  function handleLogout() {
-    setLoggedIn(false);
-    navigate("/", { replace: true });
-  }*/
-
-  /*function handleUpdateUser(userData) {
-    setCurrentUser(userData);
-  }*/
 
   function debounce(func, timeout = 300) {
     let timer;
@@ -219,15 +202,17 @@ function App() {
           <Route
             path="/movies"
             element={
-              <Movies
+              <ProtectedRouteElement
                 loggedIn={loggedIn}
+                element={Movies}
                 isMenuOpen={isMenuOpen}
                 toggleMenu={toggleMenu}
                 handleCheckbox={handleCheckbox}
                 isShortFilm={isShortFilm}
               />
-            } /* страница «Фильмы» */
+            }
           />
+
           <Route
             path="/saved-movies"
             element={
@@ -344,4 +329,17 @@ return (
     </>
   </CurrentUserContext.Provider>
 );
+
+
+          <Route
+            path="/movies"
+            element={
+              <Movies
+                loggedIn={loggedIn}
+                isMenuOpen={isMenuOpen}
+                toggleMenu={toggleMenu}
+                handleCheckbox={handleCheckbox}
+                isShortFilm={isShortFilm}
+              />
+            } //страница «Фильмы» 
 */
