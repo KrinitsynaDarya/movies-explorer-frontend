@@ -6,6 +6,7 @@ export const register = (name, email, password) => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      mode: "no-cors",
     },
     body: JSON.stringify({ name, email, password }),
     credentials: "include", // теперь куки посылаются вместе с запросом
