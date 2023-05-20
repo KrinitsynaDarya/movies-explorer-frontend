@@ -10,6 +10,8 @@ const Profile = ({
   onLogout,
   isMenuOpen,
   toggleMenu,
+  errorMessage,
+  setErrorMessage,
 }) => {
   const currentUser = React.useContext(CurrentUserContext);
   const { values, handleChange, errors, isValid, setValues } =
@@ -23,8 +25,13 @@ const Profile = ({
     });
   }, [setValues, currentUser]);
 
+  React.useEffect(() => {
+    setErrorMessage(null);
+  }, [setErrorMessage]);
+
   function handleSubmit(e) {
     e.preventDefault();
+    console.log("hello");
     const { name, email } = values;
     onUpdateUser({ name, email });
   }
@@ -76,6 +83,9 @@ const Profile = ({
             )}
           </fieldset>
           <div className="profile__buttons">
+            {errorMessage && (
+              <span className="profile__submit-error">{errorMessage}</span>
+            )}
             <button
               type="submit"
               className="profile__button"

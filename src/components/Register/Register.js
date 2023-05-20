@@ -5,7 +5,7 @@ import Layout from "../Layout/Layout";
 import Logo from "../Logo/Logo";
 import { useFormWithValidation } from "../App/useForm";
 
-const Register = ({ onRegister }) => {
+const Register = ({ onRegister, setErrorMessage, errorMessage }) => {
   function handleSubmit(e) {
     e.preventDefault();
     const { name, email, password } = values;
@@ -14,6 +14,10 @@ const Register = ({ onRegister }) => {
 
   const { values, handleChange, resetFrom, errors, isValid, setValues } =
     useFormWithValidation();
+
+  React.useEffect(() => {
+    setErrorMessage(null);
+  }, [setErrorMessage]);
 
   return (
     <Layout hasHeader={false} hasFooter={false}>
@@ -67,7 +71,7 @@ const Register = ({ onRegister }) => {
                 type="password"
                 minLength={8}
                 required
-                value={values.password}
+                value={values.password || ""}
                 onChange={handleChange}
                 placeholder=""
               />
@@ -75,6 +79,9 @@ const Register = ({ onRegister }) => {
             </div>
           </fieldset>
           <div className="register__button-container">
+            {errorMessage && (
+              <span className="register__submit-error">{errorMessage}</span>
+            )}
             <button
               type="submit"
               onSubmit={handleSubmit}

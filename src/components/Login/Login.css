@@ -118,6 +118,18 @@
   color: #ff4062;
 }
 
+.login__submit-error {
+  text-align: center;
+  padding-bottom: 5px;
+  font-family: "Inter", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+
+  color: #ff4062;
+}
+
 .login__register-link {
   padding-left: 6px;
   text-decoration: none;
@@ -175,6 +187,9 @@
   }
 
   .login__button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     /* padding: 267px 0 0;*/
     padding: 0;
   }

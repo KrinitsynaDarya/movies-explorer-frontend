@@ -13,6 +13,9 @@ import CurrentUserContext from "../../contexts/CurrentUserContext";
 import { useNavigate } from "react-router-dom";
 import SavedMovies from "../SavedMovies/SavedMovies";
 
+import * as auth from "../../utils/Auth";
+import mainApi from "../../utils/MainApi";
+
 function App() {
   const navigate = useNavigate();
 
@@ -32,7 +35,7 @@ function App() {
     });
   }, []);
 
-  function handleRegister(email, password) {
+  /*function handleRegister(email, password) {
     navigate("/signin", { replace: true });
   }
 
@@ -44,11 +47,11 @@ function App() {
   function handleLogout() {
     setLoggedIn(false);
     navigate("/", { replace: true });
-  }
+  }*/
 
-  function handleUpdateUser(userData) {
+  /*function handleUpdateUser(userData) {
     setCurrentUser(userData);
-  }
+  }*/
 
   function debounce(func, timeout = 300) {
     let timer;
@@ -80,6 +83,123 @@ function App() {
     };
   }, [handleResize]);
 
+  /*19.05.2023 start*/
+  const [cards, setCards] = React.useState([]);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
+    React.useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
+    React.useState(false);
+  //const [isInfoToolTipOpen, //setIsInfoToolTipOpen] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState(null);
+  const [userEmail, setUserEmail] = React.useState();
+  const [isSucces, setIsSucces] = React.useState(false);
+
+  /* React.useEffect(() => {
+    if (loggedIn === false) return;
+    Promise.all([api.getUserInfo(), api.getInitialCards()])
+      .then(([userData, initialCards]) => {
+        setCurrentUser(userData);
+        setUserEmail(userData.email);
+        setCards(initialCards);
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      });
+  }, [loggedIn]);*/
+
+  React.useEffect(() => {
+    tokenCheck();
+  }, []);
+
+  function tokenCheck() {
+    auth
+      .getContent()
+      .then((res) => {
+        if (res.authorized === false) {
+          setLoggedIn(false);
+        } else if (res.authorized === true) {
+          setLoggedIn(true);
+          navigate("/", { replace: true });
+        }
+      })
+      .catch((err) => {
+        setLoggedIn(false);
+        console.log(err.message);
+      });
+  }
+
+  function handleUpdateUser(userData) {
+    mainApi
+      .editUserInfo(userData)
+      .then((userData) => {
+        setCurrentUser(userData);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      })
+      .finally(() => {
+        // popupEditProfile.renderLoading(false);
+      });
+  }
+
+  function handleEditProfileClick() {
+    setIsEditProfilePopupOpen(true);
+  }
+
+  function closeAllPopups() {
+    setIsAddPlacePopupOpen(false);
+    setIsEditProfilePopupOpen(false);
+    setIsEditAvatarPopupOpen(false);
+    //setIsInfoToolTipOpen(false);
+  }
+
+  function handleRegister(name, email, password) {
+    auth
+      .register(name, email, password)
+      .then((res) => {
+        if (res) {
+          setIsSucces(true);
+          setErrorMessage(null);
+          navigate("/signin", { replace: true });
+        }
+      })
+      .catch((err) => {
+        // setIsSucces(false);
+        setErrorMessage(err.message);
+      });
+  }
+
+  function handleLogin(email, password) {
+    auth
+      .authorize(email, password)
+      .then(() => {
+        setErrorMessage(null);
+        setLoggedIn(true);
+        setUserEmail(email);
+        navigate("/movies", { replace: true });
+      })
+      .catch((err) => {
+        //setIsSucces(false);
+        //setIsInfoToolTipOpen(true);
+        setErrorMessage(err.message);
+      });
+  }
+
+  function handleLogout() {
+    auth
+      .logout()
+      .then(() => {
+        setLoggedIn(false);
+        setUserEmail();
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }
+  /*19.05.2023 end*/
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <>
@@ -129,18 +249,30 @@ function App() {
                 onLogout={handleLogout}
                 isMenuOpen={isMenuOpen}
                 toggleMenu={toggleMenu}
+                errorMessage={errorMessage}
+                setErrorMessage={setErrorMessage}
               />
             } /* страница с профилем пользователя */
           />
           <Route
             path="/signup"
             element={
-              <Register onRegister={handleRegister} />
+              <Register
+                onRegister={handleRegister}
+                errorMessage={errorMessage}
+                setErrorMessage={setErrorMessage}
+              />
             } /* страница регистрации */
           />
           <Route
             path="/signin"
-            element={<Login onLogin={handleLogin} />} /* страница авторизации */
+            element={
+              <Login
+                onLogin={handleLogin}
+                errorMessage={errorMessage}
+                setErrorMessage={setErrorMessage}
+              />
+            } /* страница авторизации */
           />
           <Route
             path="*"
@@ -153,3 +285,63 @@ function App() {
 }
 
 export default App;
+/*
+return (
+  <CurrentUserContext.Provider value={currentUser}>
+    <>
+      <Header loggedIn={loggedIn} email={userEmail} onLogout={handleLogout} />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <ProtectedRouteElement
+              loggedIn={loggedIn}
+              element={Main}
+              onEditProfile={handleEditProfileClick}
+              onAddPlace={handleAddPlaceClick}
+              onEditAvatar={handleEditAvatarClick}
+              cards={cards}
+              onCardClick={handleCardClick}
+              onCardLike={handleCardLike}
+              onCardDelete={handleCardDelete}
+            />
+          }
+        />
+        <Route
+          path="/sign-up"
+          element={<Register onRegister={handleRegister} />}
+        />
+        <Route path="/sign-in" element={<Login onLogin={handleLogin} />} />
+      </Routes>
+
+      <Footer />
+      <ImagePopup
+        onClose={() => {
+          setSelectedCard(null);
+        }}
+        card={selectedCard}
+      />
+      <EditProfilePopup
+        isOpen={isEditProfilePopupOpen}
+        onClose={closeAllPopups}
+        onUpdateUser={handleUpdateUser}
+      />
+      <EditAvatarPopup
+        isOpen={isEditAvatarPopupOpen}
+        onClose={closeAllPopups}
+        onUpdateAvatar={handleUpdateAvatar}
+      />
+      <AddPlacePopup
+        isOpen={isAddPlacePopupOpen}
+        onClose={closeAllPopups}
+        onAddPlace={handleAddPlaceSubmit}
+      />
+      <InfoTooltip
+        isOpen={isInfoToolTipOpen}
+        onClose={closeAllPopups}
+        isSucces={isSucces}
+      />
+    </>
+  </CurrentUserContext.Provider>
+);
+*/
