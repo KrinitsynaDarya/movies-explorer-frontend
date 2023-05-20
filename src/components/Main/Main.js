@@ -9,7 +9,7 @@ import PageContainer from "../PageContainer/PageContainer";
 
 function Main({ loggedIn, isMenuOpen, toggleMenu }) {
   return (
-    <Layout loggedIn={false} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu}>
+    <Layout loggedIn={loggedIn} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu}>
       <Promo />
       <NavTab />
       <AboutProject />
