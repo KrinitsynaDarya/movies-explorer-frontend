@@ -216,20 +216,23 @@ function App() {
           <Route
             path="/saved-movies"
             element={
-              <SavedMovies
+              <ProtectedRouteElement
                 loggedIn={loggedIn}
+                element={SavedMovies}
                 isMenuOpen={isMenuOpen}
                 toggleMenu={toggleMenu}
                 handleCheckbox={handleCheckbox}
                 isShortFilm={isShortFilm}
               />
-            } /* страница «Сохранённые фильмы» */
+            }
           />
+
           <Route
             path="/profile"
             element={
-              <Profile
+              <ProtectedRouteElement
                 loggedIn={loggedIn}
+                element={Profile}
                 onUpdateUser={handleUpdateUser}
                 onLogout={handleLogout}
                 isMenuOpen={isMenuOpen}
@@ -237,8 +240,9 @@ function App() {
                 errorMessage={errorMessage}
                 setErrorMessage={setErrorMessage}
               />
-            } /* страница с профилем пользователя */
+            }
           />
+
           <Route
             path="/signup"
             element={
@@ -342,4 +346,31 @@ return (
                 isShortFilm={isShortFilm}
               />
             } //страница «Фильмы» 
+                      <Route
+            path="/profile"
+            element={
+              <Profile
+                loggedIn={loggedIn}
+                onUpdateUser={handleUpdateUser}
+                onLogout={handleLogout}
+                isMenuOpen={isMenuOpen}
+                toggleMenu={toggleMenu}
+                errorMessage={errorMessage}
+                setErrorMessage={setErrorMessage}
+              />
+            } // страница с профилем пользователя 
+
+              <Route
+            path="/saved-movies"
+            element={
+              <SavedMovies
+                loggedIn={loggedIn}
+                isMenuOpen={isMenuOpen}
+                toggleMenu={toggleMenu}
+                handleCheckbox={handleCheckbox}
+                isShortFilm={isShortFilm}
+              />
+            } // страница «Сохранённые фильмы» 
+          />
+          />
 */
