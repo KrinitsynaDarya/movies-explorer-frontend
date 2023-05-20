@@ -102,7 +102,8 @@ function Movies({
 
   const handleSubmit = useCallback(() => {
     setFilterString(inputString);
-  }, [setInputString]);
+    console.log("test hello!");
+  }, [inputString, movies]);
 
   const handleLoadMore = useCallback(() => {
     setPage((prev) => prev + 1);
