@@ -29,12 +29,16 @@ function App() {
   }
 
   React.useEffect(() => {
-    setCurrentUser({
-      name: "Виталий",
-      email: "pochta@yandex.ru",
-      password: "12345678",
-    });
-  }, []);
+    if (loggedIn === false) return;
+    mainApi
+      .getUserInfo()
+      .then((userData) => {
+        setCurrentUser(userData);
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      });
+  }, [loggedIn]);
 
   function debounce(func, timeout = 300) {
     let timer;
@@ -161,7 +165,7 @@ function App() {
       .then(() => {
         setErrorMessage(null);
         setLoggedIn(true);
-        setUserEmail(email);
+        //setCurrentUser(email);
         navigate("/movies", { replace: true });
       })
       .catch((err) => {
