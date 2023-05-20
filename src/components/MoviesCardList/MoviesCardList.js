@@ -16,6 +16,7 @@ function MoviesCardList({
   onCardDelete,
   isSavedPage,
   isShortFilm,
+  filmsToRender,
 }) {
   //const [isLoading, setisLoading] = React.useState(true);
 
@@ -98,23 +99,19 @@ function MoviesCardList({
   return (
     <section className="movies-card-list">
       {!isSavedPage
-        ? cards
-            .filter((card) => {
-              return card.short === isShortFilm;
-            })
-            .map((card) => {
-              return (
-                <MoviesCard
-                  key={card.id}
-                  card={card}
-                  onCardClick={onCardClick}
-                  onCardLike={onCardLike}
-                  onCardDelete={onCardDelete}
-                  isSavedPage={isSavedPage}
-                  savedCards={savedCards}
-                />
-              );
-            })
+        ? filmsToRender.map((card) => {
+            return (
+              <MoviesCard
+                key={card.id}
+                card={card}
+                onCardClick={onCardClick}
+                onCardLike={onCardLike}
+                onCardDelete={onCardDelete}
+                isSavedPage={isSavedPage}
+                savedCards={savedCards}
+              />
+            );
+          })
         : savedCards
             .filter((card) => {
               return card.short === isShortFilm;

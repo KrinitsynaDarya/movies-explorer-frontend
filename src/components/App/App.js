@@ -1,21 +1,19 @@
 import "./App.css";
 import React, { useCallback } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 
 import Movies from "../../components/Movies/Movies";
+import SavedMovies from "../SavedMovies/SavedMovies";
 import Main from "../../components/Main/Main";
 import Register from "../../components/Register/Register";
 import Login from "../../components/Login/Login";
 import Profile from "../../components/Profile/Profile";
 import NotFoundPage from "../../components/NotFoundPage/NotFoundPage";
-import "./App.css";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
-import { useNavigate } from "react-router-dom";
-import SavedMovies from "../SavedMovies/SavedMovies";
+import ProtectedRouteElement from "../ProtectedRoute/ProtectedRoute";
 
 import * as auth from "../../utils/Auth";
 import mainApi from "../../utils/MainApi";
-import ProtectedRouteElement from "../ProtectedRoute/ProtectedRoute";
 
 function App() {
   const navigate = useNavigate();
@@ -24,9 +22,12 @@ function App() {
   const [loggedIn, setLoggedIn] = React.useState(false);
   //const [screenWidth, setScreenWidth] = React.useState(window.innerWidth);
   const [isShortFilm, setIsShortFilm] = React.useState(true);
-  function handleCheckbox() {
-    setIsShortFilm(!isShortFilm);
-  }
+  const [errorMessage, setErrorMessage] = React.useState(false);
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    tokenCheck();
+  }, []);
 
   React.useEffect(() => {
     if (loggedIn === false) return;
@@ -40,6 +41,20 @@ function App() {
       });
   }, [loggedIn]);
 
+  const handleResize = useCallback(
+    debounce(() => {
+      if (window.innerWidth > 1279) setIsMenuOpen(false);
+    }, 100),
+    []
+  );
+
+  React.useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [handleResize]);
+
   function debounce(func, timeout = 300) {
     let timer;
     return (...args) => {
@@ -50,42 +65,13 @@ function App() {
     };
   }
 
-  const handleResize = useCallback(
-    debounce(() => {
-      if (window.innerWidth > 1279) setIsMenuOpen(false);
-    }, 100),
-    []
-  );
-
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-
   function toggleMenu() {
     setIsMenuOpen(!isMenuOpen);
   }
 
-  React.useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [handleResize]);
-
-  /*19.05.2023 start*/
-  const [cards, setCards] = React.useState([]);
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
-    React.useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
-    React.useState(false);
-  //const [isInfoToolTipOpen, //setIsInfoToolTipOpen] = React.useState(false);
-  const [errorMessage, setErrorMessage] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState(null);
-  const [userEmail, setUserEmail] = React.useState();
-  const [isSucces, setIsSucces] = React.useState(false);
-
-  React.useEffect(() => {
-    tokenCheck();
-  }, []);
+  function handleCheckbox() {
+    setIsShortFilm(!isShortFilm);
+  }
 
   function tokenCheck() {
     auth
@@ -109,25 +95,11 @@ function App() {
       .editUserInfo(userData)
       .then((userData) => {
         setCurrentUser(userData);
-        closeAllPopups();
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
       })
-      .finally(() => {
-        // popupEditProfile.renderLoading(false);
-      });
-  }
-
-  function handleEditProfileClick() {
-    setIsEditProfilePopupOpen(true);
-  }
-
-  function closeAllPopups() {
-    setIsAddPlacePopupOpen(false);
-    setIsEditProfilePopupOpen(false);
-    setIsEditAvatarPopupOpen(false);
-    //setIsInfoToolTipOpen(false);
+      .finally(() => {});
   }
 
   function handleRegister(name, email, password) {
@@ -135,13 +107,11 @@ function App() {
       .register(name, email, password)
       .then((res) => {
         if (res) {
-          setIsSucces(true);
           setErrorMessage(null);
           navigate("/signin", { replace: true });
         }
       })
       .catch((err) => {
-        // setIsSucces(false);
         setErrorMessage(err.message);
       });
   }
@@ -152,12 +122,9 @@ function App() {
       .then(() => {
         setErrorMessage(null);
         setLoggedIn(true);
-        //setCurrentUser(email);
         navigate("/movies", { replace: true });
       })
       .catch((err) => {
-        //setIsSucces(false);
-        //setIsInfoToolTipOpen(true);
         setErrorMessage(err.message);
       });
   }
@@ -167,13 +134,12 @@ function App() {
       .logout()
       .then(() => {
         setLoggedIn(false);
-        setUserEmail();
       })
       .catch((err) => {
         console.log(err.message);
       });
   }
-  /*19.05.2023 end*/
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <>
@@ -203,7 +169,6 @@ function App() {
               />
             } /* страница «Фильмы» */
           />
-
           <Route
             path="/saved-movies"
             element={
@@ -217,7 +182,6 @@ function App() {
               />
             } /* страница «Сохранённые фильмы» */
           />
-
           <Route
             path="/profile"
             element={
@@ -233,7 +197,6 @@ function App() {
               />
             } /* страница с профилем пользователя */
           />
-
           <Route
             path="/signup"
             element={
