@@ -190,6 +190,7 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
           ) : (
             <>
               <MoviesCardList
+                handleSaveMovie={handleSaveMovie}
                 isSavedPage={false}
                 isShort={isShort}
                 filmsToRender={filmsToRender}

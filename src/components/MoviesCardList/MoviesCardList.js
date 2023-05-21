@@ -17,6 +17,7 @@ function MoviesCardList({
   isSavedPage,
   isShortFilm,
   filmsToRender,
+  handleSaveMovie,
 }) {
   //const [isLoading, setisLoading] = React.useState(true);
 
@@ -109,6 +110,7 @@ function MoviesCardList({
                 onCardDelete={onCardDelete}
                 isSavedPage={isSavedPage}
                 savedCards={savedCards}
+                handleSaveMovie={handleSaveMovie}
               />
             );
           })
