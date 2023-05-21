@@ -7,7 +7,8 @@ function MoviesCard({
   handleSaveMovie,
   handleDeleteMovie,
   isSavedPage,
-  savedCards,
+  // savedCards,
+  savedMovies,
 }) {
   // const currentUser = React.useContext(CurrentUserContext);
   //const isOwn = card.owner._id === currentUser._id;
@@ -18,7 +19,8 @@ function MoviesCard({
     return `${hours}ч ${minutes}м`;
   }
 
-  const isLiked = savedCards.some((i) => i.id === card.id);
+  //const isLiked = savedCards.some((i) => i.id === card.id);
+  const isLiked = savedMovies.some((i) => i.movieId === card.id);
 
   const cardLikeButtonClassName = `card__like-button ${
     isLiked && "card__like-button_active"
