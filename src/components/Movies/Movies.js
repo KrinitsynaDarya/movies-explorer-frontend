@@ -100,10 +100,9 @@ function Movies({
     return filteredFilms.slice(0, filmsCount * page);
   }, [filteredFilms, page, screenWidth]);
 
-  const handleSubmit = useCallback(() => {
+  const handleSubmit = () => {
     setFilterString(inputString);
-    console.log("test hello!");
-  }, [inputString, movies]);
+  };
 
   const handleLoadMore = useCallback(() => {
     setPage((prev) => prev + 1);
