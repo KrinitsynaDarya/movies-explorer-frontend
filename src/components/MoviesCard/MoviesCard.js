@@ -35,13 +35,13 @@ function MoviesCard({
           <button
             type="button"
             className="card__delete-button"
-            onClick={handleSaveMovie}
+            onClick={handleDeleteMovie}
           />
         ) : (
           <button
             type="button"
             className={cardLikeButtonClassName}
-            onClick={handleDeleteMovie}
+            onClick={handleSaveMovie}
           />
         )}
       </div>
