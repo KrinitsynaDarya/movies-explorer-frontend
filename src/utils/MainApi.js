@@ -13,19 +13,29 @@ class Api {
   }
 
   getSavedMovies() {
-    return fetch(`${this._baseUrl}/`, {
+    return fetch(`${this._baseUrl}/movies`, {
       headers: this._headers,
       credentials: "include", // теперь куки посылаются вместе с запросом
     }).then((res) => this._checkResponse(res));
   }
 
-  saveMovie(cardData) {
-    return fetch(`${this._baseUrl}/`, {
+  saveMovie(movie) {
+    return fetch(`${this._baseUrl}/movies`, {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({
-        name: cardData.name,
-        link: cardData.link,
+        country: movie.country, // страна создания фильма. Обязательное поле-строка.
+        director: movie.director, // режиссёр фильма. Обязательное поле-строка.
+        duration: movie.duration, // длительность фильма. Обязательное поле-число.
+        year: movie.year, // год выпуска фильма. Обязательное поле-строка.
+        description: movie.description, // описание фильма. Обязательное поле-строка.
+        image: `https://api.nomoreparties.co/${movie.image.url}`, // ссылка на постер к фильму. Обязательное поле-строка. Запишите её URL-адресом.
+        trailerLink: movie.trailerLink, // ссылка на трейлер фильма. Обязательное поле-строка. Запишите её URL-адресом.
+        thumbnail: `https://api.nomoreparties.co/${movie.thumbnail.url}`, // миниатюрное изображение постера к фильму. Обязательное поле-строка. Запишите её URL-адресом.
+        owner: movie.owner, // _id пользователя, который сохранил фильм. Обязательное поле.
+        movieId: movie.movieId, // id фильма, который содержится в ответе сервиса MoviesExplorer. Обязательное поле.
+        nameRU: movie.nameRU, // название фильма на русском языке. Обязательное поле-строка.
+        nameEN: movie.nameEN,
       }),
       credentials: "include", // теперь куки посылаются вместе с запросом
     }).then((res) => this._checkResponse(res));
