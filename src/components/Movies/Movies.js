@@ -96,7 +96,7 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
   }
 
   const fetchMovies = useCallback(() => {
-    const savedMovies = localStorage.getItem("movies");
+    // const savedMovies = localStorage.getItem("movies");
     setIsLoading(true);
     apiMovies
       .getInitialCards()
@@ -195,6 +195,7 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
                 isSavedPage={false}
                 isShort={isShort}
                 filmsToRender={filmsToRender}
+                savedMovies={savedMovies}
               />
               <div className="movies__more-container">
                 {filmsToRender < filteredFilms && (
