@@ -20,7 +20,9 @@ function MoviesCard({
   }
 
   //const isLiked = savedCards.some((i) => i.id === card.id);
-  const isLiked = savedMovies.some((i) => i.movieId === card.id);
+  const isLiked = savedMovies
+    ? savedMovies.some((i) => i.movieId === card.id)
+    : false;
 
   const cardLikeButtonClassName = `card__like-button ${
     isLiked && "card__like-button_active"
