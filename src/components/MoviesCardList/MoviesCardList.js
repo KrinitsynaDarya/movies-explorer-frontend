@@ -2,7 +2,12 @@ import React from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import "./MoviesCardList.css";
 
-function MoviesCardList({ isSavedPage, filmsToRender, handleSaveMovie }) {
+function MoviesCardList({
+  isSavedPage,
+  filmsToRender,
+  handleSaveMovie,
+  savedMovies,
+}) {
   return (
     <section className="movies-card-list">
       {filmsToRender.map((card) => {
@@ -11,6 +16,7 @@ function MoviesCardList({ isSavedPage, filmsToRender, handleSaveMovie }) {
             key={card.id}
             card={card}
             isSavedPage={isSavedPage}
+            savedMovies={savedMovies}
             handleSaveMovie={handleSaveMovie}
           />
         );
