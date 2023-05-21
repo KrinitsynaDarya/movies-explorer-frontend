@@ -54,7 +54,7 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
           trailerLink: movie.trailerLink, // ссылка на трейлер фильма. Обязательное поле-строка. Запишите её URL-адресом.
           thumbnail: `https://api.nomoreparties.co/${movie.thumbnail.url}`, // миниатюрное изображение постера к фильму. Обязательное поле-строка. Запишите её URL-адресом.
           owner: movie.owner, // _id пользователя, который сохранил фильм. Обязательное поле.
-          movieId: movie.movieId, // id фильма, который содержится в ответе сервиса MoviesExplorer. Обязательное поле.
+          movieId: movie.id, // id фильма, который содержится в ответе сервиса MoviesExplorer. Обязательное поле.
           nameRU: movie.nameRU, // название фильма на русском языке. Обязательное поле-строка.
           nameEN: movie.nameEN, // название фильма на английском языке. Обязательное поле-строка.
         })
