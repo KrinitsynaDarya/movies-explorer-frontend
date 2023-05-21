@@ -1,17 +1,117 @@
+import React, { useMemo, useState, useCallback } from "react";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import "./SavedMovies.css";
 import Layout from "../Layout/Layout";
 import SearchForm from "../SearchForm/SearchForm";
 import PageContainer from "../PageContainer/PageContainer";
+import "./SavedMovies.css";
+import mainApi from "../../utils/MainApi";
 
 function SavedMovies({
   loggedIn,
   isMenuOpen,
   toggleMenu,
-  handleCheckbox,
+  // handleCheckbox,
   isShortFilm,
 }) {
+  const [movies, setMovies] = useState([]);
+  const [inputString, setInputString] = useState("");
+  const [filterString, setFilterString] = useState("");
+  const [isShort, setIsShort] = useState(true);
+  const [serverError, setServerError] = useState(null);
+  // const [savedMovies, setSavedMovies] = useState([]);
+
+  function handleCheckbox() {
+    setIsShort(!isShort);
+  }
+  React.useEffect(() => {
+    //запрашиваем с сервера свежие сохраненные фильмы
+    mainApi
+      .getSavedMovies()
+      .then((movies) => {
+        localStorage.setItem("movies", JSON.stringify(movies));
+        setSavedMovies(JSON.parse(localStorage.getItem("movies")));
+        //throw new Error("");
+      })
+      .catch((err) => {
+        setServerError(
+          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
+        );
+      })
+      .finally(() => {});
+  }, []);
+
+  React.useEffect(() => {
+    const savedsSearch = localStorage.getItem("search");
+    const savedIsShort = JSON.parse(localStorage.getItem("isShort")) === true;
+
+    if (savedsSearch) {
+      setInputString(savedsSearch);
+      setFilterString(savedsSearch);
+    }
+
+    if (savedIsShort) {
+      setIsShort(savedIsShort);
+    }
+  }, []);
+
+  const filteredFilms = useMemo(() => {
+    if (!filterString) {
+      return [];
+    }
+    const filtered = movies.filter((movie) => {
+      const nameRU = movie.nameRU.toUpperCase();
+      if (isShort && movie.duration > 40) {
+        return false;
+      }
+      return nameRU.includes(filterString.toUpperCase());
+    });
+
+    localStorage.setItem("search", filterString);
+    localStorage.setItem("isShort", String(isShort));
+    //localStorage.setItem("movies", JSON.stringify(filtered));
+
+    return filtered;
+  }, [filterString, movies, isShort]);
+
+  const filmsToRender = useMemo(() => {
+    return filteredFilms;
+  }, [filteredFilms]);
+
+  const handleSubmit = (inputString) => {
+    setFilterString(inputString);
+  };
+
   return (
+    <Layout loggedIn={loggedIn} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu}>
+      <section className="movies">
+        <PageContainer>
+          <SearchForm
+            handleCheckbox={handleCheckbox}
+            isShort={isShort}
+            setIsShort={setIsShort}
+            onSubmit={handleSubmit}
+            inputString={inputString}
+            setInputString={setInputString}
+          />
+          {serverError !== "" ? (
+            <p className="movies__server-error">{serverError}</p>
+          ) : filmsToRender.length === 0 ? (
+            <p class="movies__not-found">Ничего не найдено</p>
+          ) : (
+            <>
+              <MoviesCardList
+                isSavedPage={false}
+                isShort={isShort}
+                filmsToRender={filmsToRender}
+              />
+            </>
+          )}
+        </PageContainer>
+      </section>
+    </Layout>
+  );
+  /*return (
     <Layout loggedIn={loggedIn} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu}>
       <section className="movies">
         <PageContainer>
@@ -24,7 +124,7 @@ function SavedMovies({
         </PageContainer>
       </section>
     </Layout>
-  );
+  );*/
 }
 
 export default SavedMovies;

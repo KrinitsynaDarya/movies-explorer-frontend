@@ -69,10 +69,6 @@ function App() {
     setIsMenuOpen(!isMenuOpen);
   }
 
-  function handleCheckbox() {
-    setIsShortFilm(!isShortFilm);
-  }
-
   function tokenCheck() {
     auth
       .getContent()
@@ -164,8 +160,7 @@ function App() {
                 element={Movies}
                 isMenuOpen={isMenuOpen}
                 toggleMenu={toggleMenu}
-                handleCheckbox={handleCheckbox}
-                isShortFilm={isShortFilm}
+                // isShortFilm={isShortFilm}
               />
             } /* страница «Фильмы» */
           />
@@ -177,8 +172,7 @@ function App() {
                 element={SavedMovies}
                 isMenuOpen={isMenuOpen}
                 toggleMenu={toggleMenu}
-                handleCheckbox={handleCheckbox}
-                isShortFilm={isShortFilm}
+                //  isShortFilm={isShortFilm}
               />
             } /* страница «Сохранённые фильмы» */
           />

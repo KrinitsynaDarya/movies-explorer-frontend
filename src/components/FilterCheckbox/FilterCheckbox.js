@@ -1,13 +1,13 @@
 import "./FilterCheckbox.css";
 
-function FilterCheckbox({ handleCheckbox, isShortFilm }) {
+function FilterCheckbox({ handleCheckbox, isShort }) {
   return (
     <div className="filter">
       <label className="filter__tumbler">
         <input
           type="checkbox"
           className="filter__checkbox"
-          checked={isShortFilm}
+          checked={isShort}
           onChange={handleCheckbox}
         ></input>
         <span className="filter__slider"></span>

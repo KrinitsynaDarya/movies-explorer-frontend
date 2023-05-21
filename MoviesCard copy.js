@@ -4,8 +4,9 @@ import "./MoviesCard.css";
 
 function MoviesCard({
   card,
-  handleSaveMovie,
-  handleDeleteMovie,
+  onCardClick,
+  onCardLike,
+  onCardDelete,
   isSavedPage,
   savedCards,
 }) {
@@ -32,25 +33,12 @@ function MoviesCard({
           <h2 className="card__subtitle">{toHoursAndMinutes(card.duration)}</h2>
         </div>
         {isSavedPage ? (
-          <button
-            type="button"
-            className="card__delete-button"
-            onClick={handleSaveMovie}
-          />
+          <button type="button" className="card__delete-button" />
         ) : (
-          <button
-            type="button"
-            className={cardLikeButtonClassName}
-            onClick={handleDeleteMovie}
-          />
+          <button type="button" className={cardLikeButtonClassName} />
         )}
       </div>
-      <a
-        href={card.trailerLink}
-        target="_blank"
-        className="card__trailer-link"
-        rel="noreferrer"
-      >
+      <a className="card__trailer-link">
         <img
           className="card__photo"
           alt={`Постер фильма ${card.nameRU}`}

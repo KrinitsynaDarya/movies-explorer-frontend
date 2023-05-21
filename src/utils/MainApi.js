@@ -12,15 +12,15 @@ class Api {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
-  getInitialCards() {
-    return fetch(`${this._baseUrl}/cards`, {
+  getSavedMovies() {
+    return fetch(`${this._baseUrl}/`, {
       headers: this._headers,
       credentials: "include", // теперь куки посылаются вместе с запросом
     }).then((res) => this._checkResponse(res));
   }
 
-  addNewCard(cardData) {
-    return fetch(`${this._baseUrl}/cards`, {
+  saveMovie(cardData) {
+    return fetch(`${this._baseUrl}/`, {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({
