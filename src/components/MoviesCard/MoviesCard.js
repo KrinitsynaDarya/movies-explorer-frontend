@@ -45,7 +45,7 @@ function MoviesCard({
           <button
             type="button"
             className={cardLikeButtonClassName}
-            onClick={handleSaveMovie}
+            onClick={handleSaveMovie(card)}
           />
         )}
       </div>
