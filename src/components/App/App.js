@@ -94,15 +94,13 @@ function App() {
     mainApi
       .editUserInfo(userData)
       .then((userData) => {
-        setInfoMessage("");
+        setInfoMessage("Изменение данных профиля прошло успешно!");
         setCurrentUser(userData);
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
       })
-      .finally(() => {
-        setInfoMessage("Изменение данных профиля прошло успешно!");
-      });
+      .finally(() => {});
   }
 
   function handleRegister(name, email, password) {
