@@ -10,7 +10,7 @@ import CurrentUserContext from "../../contexts/CurrentUserContext";
 import mainApi from "../../utils/MainApi";
 import * as auth from "../../utils/Auth";
 
-function Movies({ tokenCheck, loggedIn, isMenuOpen, toggleMenu }) {
+function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
   const [movies, setMovies] = useState([]);
   const [inputString, setInputString] = useState("");
   const [filterString, setFilterString] = useState("");
@@ -22,10 +22,6 @@ function Movies({ tokenCheck, loggedIn, isMenuOpen, toggleMenu }) {
 
   const [savedMovies, setSavedMovies] = useState([]);
   const currentUser = React.useContext(CurrentUserContext);
-
-  React.useEffect(() => {
-    tokenCheck();
-  }, []);
 
   React.useEffect(() => {
     //запрашиваем с сервера свежие сохраненные фильмы
