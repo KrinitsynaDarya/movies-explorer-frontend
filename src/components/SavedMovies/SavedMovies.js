@@ -49,7 +49,6 @@ function SavedMovies({ loggedIn, isMenuOpen, toggleMenu }) {
   }, []);
 
   const filteredFilms = useMemo(() => {
-    console.log("hello mf");
     if (!filterString) {
       return savedMovies;
     }
@@ -76,7 +75,6 @@ function SavedMovies({ loggedIn, isMenuOpen, toggleMenu }) {
   };
 
   function handleDeleteMovie(movie) {
-    console.log(`movieId? ${movie._id}`);
     mainApi
       .removeMovie(movie._id)
       .then(() => {

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./Register.css";
 import Layout from "../Layout/Layout";
 import Logo from "../Logo/Logo";
-import { useFormWithValidation } from "../App/useForm";
+import { useFormWithValidation } from "../../UserHooks/useForm";
 
 const Register = ({ onRegister, setErrorMessage, errorMessage }) => {
   function handleSubmit(e) {

@@ -2,7 +2,7 @@ import React from "react";
 import "./Profile.css";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import Layout from "../Layout/Layout";
-import { useFormWithValidation } from "../App/useForm";
+import { useFormWithValidation } from "../../UserHooks/useForm";
 
 const Profile = ({
   loggedIn,
@@ -32,7 +32,6 @@ const Profile = ({
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log("hello");
     const { name, email } = values;
     onUpdateUser({ name, email });
   }

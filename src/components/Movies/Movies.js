@@ -38,12 +38,10 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
   }, []);
 
   function handleSaveMovie(movie) {
-    console.log(movie);
     const isLiked = savedMovies
       ? savedMovies.some((i) => i.movieId === movie.id)
       : false;
 
-    console.log(`liked? ${isLiked}`);
     if (!isLiked) {
       mainApi
         .saveMovie({
@@ -73,7 +71,6 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
     } else {
       // находим _id фильма в нашей базе
       const movieId = savedMovies.find((i) => i.movieId === movie.id)._id;
-      console.log(`movieId? ${movieId}`);
       //
       mainApi
         .removeMovie(movieId)

@@ -2,7 +2,7 @@ import searchLogo from "../../images/search-logo.svg";
 import React from "react";
 import "./SearchForm.css";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
-import { useFormWithValidation } from "../App/useForm";
+import { useFormWithValidation } from "../../UserHooks/useForm";
 
 function SearchForm({
   handleCheckbox,

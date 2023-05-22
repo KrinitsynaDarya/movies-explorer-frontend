@@ -1,5 +1,6 @@
 import React from "react";
 import "./MoviesCard.css";
+import toHoursAndMinutes from "../../utils/DurationParser";
 
 function MoviesCard({
   card,
@@ -8,15 +9,6 @@ function MoviesCard({
   isSavedPage,
   savedMovies,
 }) {
-  console.log(`isSavedPage card url: ${card.image}`);
-
-  function toHoursAndMinutes(totalMinutes) {
-    const hours = Math.floor(totalMinutes / 60);
-    const minutes = totalMinutes % 60;
-
-    return `${hours}ч ${minutes}м`;
-  }
-
   function handleLikeClick() {
     handleSaveMovie(card);
   }
