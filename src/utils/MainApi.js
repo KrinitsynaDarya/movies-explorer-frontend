@@ -9,8 +9,6 @@ class Api {
     if (res.ok) {
       return res.json();
     }
-    /* если куки потеряли актуальность за время пребывания на защищенном роуте, отправляем авторизровываться*/
-    if (res.status === 401) window.location.href = "/signin";
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 

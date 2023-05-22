@@ -9,6 +9,7 @@
 @media (max-width: 1279px) {
   .movies-card-list {
     padding: 70px 0 30px;
+    grid-template-columns: repeat(1, 708px); /*16.05*/
     /* display: grid;
     max-width: 668px;
     grid-template-columns: repeat(2, 1fr);
