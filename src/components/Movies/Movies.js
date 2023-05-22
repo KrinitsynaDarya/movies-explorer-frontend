@@ -6,9 +6,7 @@ import SearchForm from "../SearchForm/SearchForm";
 import PageContainer from "../PageContainer/PageContainer";
 import apiMovies from "../../utils/MoviesApi";
 import Preloader from "../Preloader/Preloader";
-import CurrentUserContext from "../../contexts/CurrentUserContext";
 import mainApi from "../../utils/MainApi";
-import * as auth from "../../utils/Auth";
 
 function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
   const [movies, setMovies] = useState([]);
@@ -21,7 +19,6 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
   const [serverError, setServerError] = useState(null);
 
   const [savedMovies, setSavedMovies] = useState([]);
-  const currentUser = React.useContext(CurrentUserContext);
 
   React.useEffect(() => {
     //запрашиваем с сервера свежие сохраненные фильмы
@@ -138,7 +135,7 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
   React.useEffect(() => {
     fetchMovies();
     const savedsSearch = localStorage.getItem("search");
-    const savedIsShort = JSON.parse(localStorage.getItem("isShort")) === true;
+    const savedIsShort = localStorage.getItem("isShort");
 
     if (savedsSearch) {
       setInputString(savedsSearch);
@@ -146,7 +143,7 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
     }
 
     if (savedIsShort) {
-      setIsShort(savedIsShort);
+      setIsShort(savedIsShort === true);
     }
   }, []);
 

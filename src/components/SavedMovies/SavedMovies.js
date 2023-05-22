@@ -134,20 +134,6 @@ function SavedMovies({
       </section>
     </Layout>
   );
-  /*return (
-    <Layout loggedIn={loggedIn} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu}>
-      <section className="movies">
-        <PageContainer>
-          <SearchForm
-            handleCheckbox={handleCheckbox}
-            isShortFilm={isShortFilm}
-          />
-          <MoviesCardList isSavedPage={true} isShortFilm={isShortFilm} />
-          <div className="movies__more-container"></div>
-        </PageContainer>
-      </section>
-    </Layout>
-  );*/
 }
 
 export default SavedMovies;

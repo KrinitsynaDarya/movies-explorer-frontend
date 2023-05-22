@@ -21,7 +21,6 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState({});
   const [loggedIn, setLoggedIn] = React.useState(false);
   //const [screenWidth, setScreenWidth] = React.useState(window.innerWidth);
-  const [isShortFilm, setIsShortFilm] = React.useState(true);
   const [errorMessage, setErrorMessage] = React.useState(false);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isInitialized, setIsInitialized] = React.useState(false);
@@ -165,7 +164,6 @@ function App() {
                 element={Movies}
                 isMenuOpen={isMenuOpen}
                 toggleMenu={toggleMenu}
-                // isShortFilm={isShortFilm}
               />
             } /* страница «Фильмы» */
           />
@@ -177,7 +175,6 @@ function App() {
                 element={SavedMovies}
                 isMenuOpen={isMenuOpen}
                 toggleMenu={toggleMenu}
-                //  isShortFilm={isShortFilm}
               />
             } /* страница «Сохранённые фильмы» */
           />
