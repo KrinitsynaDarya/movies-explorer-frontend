@@ -6,6 +6,7 @@ import SearchForm from "../SearchForm/SearchForm";
 import PageContainer from "../PageContainer/PageContainer";
 import "./SavedMovies.css";
 import mainApi from "../../utils/MainApi";
+import SearchMovies from "../../utils/SearchMovies";
 
 function SavedMovies({ loggedIn, isMenuOpen, toggleMenu }) {
   const [inputString, setInputString] = useState("");
@@ -52,18 +53,11 @@ function SavedMovies({ loggedIn, isMenuOpen, toggleMenu }) {
     if (!filterString) {
       return savedMovies;
     }
-    const filtered = savedMovies.filter((movie) => {
-      const nameRU = movie.nameRU.toUpperCase();
-      if (isShort && movie.duration > 40) {
-        return false;
-      }
-      return nameRU.includes(filterString.toUpperCase());
-    });
 
     localStorage.setItem("searchSaved", filterString);
     localStorage.setItem("isShortSaved", String(isShort));
 
-    return filtered;
+    return SearchMovies(savedMovies, isShort, filterString);
   }, [filterString, savedMovies, isShort]);
 
   const filmsToRender = useMemo(() => {

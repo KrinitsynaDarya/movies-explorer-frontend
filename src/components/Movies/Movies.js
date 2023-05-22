@@ -162,13 +162,6 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
     if (!filterString) {
       return [];
     }
-    /* const filtered = movies.filter((movie) => {
-      const nameRU = movie.nameRU.toUpperCase();
-      if (isShort && movie.duration > 40) {
-        return false;
-      }
-      return nameRU.includes(filterString.toUpperCase());
-    });*/
 
     localStorage.setItem("search", filterString);
     localStorage.setItem("isShort", String(isShort));
