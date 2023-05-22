@@ -19,12 +19,12 @@
 .popup__close-button {
   position: absolute;
   align-self: flex-end;
-  margin: 0; /*-40px 8px 0;*/
+  margin: 0;
   top: -40px;
   right: -40px;
   padding: 0;
   width: 32px;
-  min-height: 32px;
+  height: 32px;
   background: rgba(0, 0, 0, 0) url(../../images/close-button.svg);
   background-size: 100% 100%;
   border: none;
@@ -35,18 +35,8 @@
   opacity: 0.6;
 }
 
-@media screen and (max-width: 527px) {
-  .popup__close-button {
-    margin: 0; /*0 16px 0;*/
-    top: -36px;
-    right: 0;
-    width: 20px;
-    height: 20px;
-  }
-}
 .popup__content {
   padding: 0;
-  /* 3. Убрано фиксированное значение верхнего отступа попапа */
   max-width: 430px;
   min-width: 282px;
   position: relative;
@@ -54,12 +44,6 @@
   flex-direction: column;
   height: auto;
   margin: auto;
-}
-
-@media screen and (max-width: 527px) {
-  .popup__content {
-    width: calc(100% - 19px * 2);
-  }
 }
 
 .popup__image {
@@ -78,13 +62,6 @@
   text-align: center;
 }
 
-@media screen and (max-width: 527px) {
-  .popup__subtitle {
-    font-size: 18px;
-    line-height: 22px;
-  }
-}
-
 .popup__info {
   display: flex;
   flex-direction: column;
@@ -98,13 +75,6 @@
   background-color: #ffffff;
   box-sizing: border-box;
   border-radius: 10px;
-}
-
-@media screen and (max-width: 527px) {
-  .popup__form {
-    width: 100%;
-    padding: 25px 22px;
-  }
 }
 
 .popup__submit-button {
@@ -129,14 +99,43 @@
   opacity: 0.8;
 }
 
-@media screen and (max-width: 527px) {
+.popup_opened {
+  display: flex;
+  opacity: 1;
+  visibility: visible;
+}
+
+@media screen and (max-width: 767px) {
+  .popup__close-button {
+    margin: 0;
+    top: -36px;
+    right: 0;
+  }
+}
+
+@media screen and (max-width: 767px) {
   .popup__submit-button {
     font-size: 14px;
     line-height: 17px;
   }
 }
-.popup_opened {
-  display: flex;
-  opacity: 1;
-  visibility: visible;
+
+@media screen and (max-width: 767px) {
+  .popup__form {
+    max-width: 320px;
+    padding: 25px 22px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .popup__subtitle {
+    font-size: 18px;
+    line-height: 22px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .popup__content {
+    max-width: 320px;
+  }
 }
