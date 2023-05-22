@@ -94,6 +94,7 @@ function App() {
     mainApi
       .editUserInfo(userData)
       .then((userData) => {
+        setInfoMessage("");
         setCurrentUser(userData);
       })
       .catch((err) => {
