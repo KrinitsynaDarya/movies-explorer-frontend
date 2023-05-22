@@ -15,7 +15,7 @@ const Profile = ({
 }) => {
   const currentUser = React.useContext(CurrentUserContext);
   const { values, handleChange, errors, isValid, setValues, isDirty } =
-    useFormWithValidation();
+    useFormWithValidation(currentUser);
   // После загрузки текущего пользователя из API
   // его данные будут использованы в управляемых компонентах.
   React.useEffect(() => {
