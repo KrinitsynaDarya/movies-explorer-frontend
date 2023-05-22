@@ -208,7 +208,7 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
             <Preloader />
           ) : serverError ? (
             <p className="movies__server-error">{serverError}</p>
-          ) : filmsToRender.length === 0 ? (
+          ) : filmsToRender.length === 0 && filterString ? (
             <p class="movies__not-found">Ничего не найдено</p>
           ) : (
             <>
