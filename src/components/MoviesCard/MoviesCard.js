@@ -10,6 +10,7 @@ function MoviesCard({
   // savedCards,
   savedMovies,
 }) {
+  console.log(`isSavedPage card: ${isSavedPage}`);
   // const currentUser = React.useContext(CurrentUserContext);
   //const isOwn = card.owner._id === currentUser._id;
   function toHoursAndMinutes(totalMinutes) {

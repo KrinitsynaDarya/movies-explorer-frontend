@@ -8,6 +8,7 @@ function MoviesCardList({
   handleSaveMovie,
   savedMovies,
 }) {
+  console.log(`isSavedPage: ${isSavedPage}`);
   return (
     <section className="movies-card-list">
       {filmsToRender.map((card) => {
