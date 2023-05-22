@@ -30,8 +30,10 @@ function SavedMovies({
       .getSavedMovies()
       .then((movies) => {
         //localStorage.setItem("movies", JSON.stringify(movies));
-        setSavedMovies(movies);
-        console.log(savedMovies);
+        localStorage.setItem("moviesSaved", JSON.stringify(movies));
+        setSavedMovies(JSON.parse(localStorage.getItem("moviesSaved")));
+
+        //setSavedMovies(movies);
         //throw new Error("");
       })
       .catch((err) => {
