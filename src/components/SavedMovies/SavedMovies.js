@@ -7,6 +7,7 @@ import PageContainer from "../PageContainer/PageContainer";
 import "./SavedMovies.css";
 import mainApi from "../../utils/MainApi";
 import SearchMovies from "../../utils/SearchMovies";
+import { SERVER_ERROR_MESSAGE } from "../../utils/ProjectConstants";
 
 function SavedMovies({ loggedIn, isMenuOpen, toggleMenu }) {
   const [inputString, setInputString] = useState("");
@@ -27,9 +28,7 @@ function SavedMovies({ loggedIn, isMenuOpen, toggleMenu }) {
         setSavedMovies(JSON.parse(localStorage.getItem("moviesSaved")));
       })
       .catch((err) => {
-        setServerError(
-          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
-        );
+        setServerError(SERVER_ERROR_MESSAGE);
       })
       .finally(() => {});
   }, []);
@@ -75,11 +74,7 @@ function SavedMovies({ loggedIn, isMenuOpen, toggleMenu }) {
         setSavedMovies(savedMovies.filter((i) => i._id !== movie._id));
         //throw new Error("");
       })
-      .catch((err) => {
-        setServerError(
-          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
-        );
-      })
+      .catch((err) => {})
       .finally(() => {});
   }
 

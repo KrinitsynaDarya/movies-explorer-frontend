@@ -14,17 +14,18 @@ import ProtectedRouteElement from "../ProtectedRoute/ProtectedRoute";
 
 import * as auth from "../../utils/Auth";
 import mainApi from "../../utils/MainApi";
+import { DESKTOP } from "../../utils/ProjectConstants";
 
 function App() {
   const navigate = useNavigate();
 
   const [currentUser, setCurrentUser] = React.useState({});
   const [loggedIn, setLoggedIn] = React.useState(false);
-  //const [screenWidth, setScreenWidth] = React.useState(window.innerWidth);
   const [errorMessage, setErrorMessage] = React.useState(false);
   const [infoMessage, setInfoMessage] = React.useState("");
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isInitialized, setIsInitialized] = React.useState(false);
+  const { width: desktopWidth } = DESKTOP;
 
   React.useEffect(() => {
     tokenCheck();
@@ -45,7 +46,7 @@ function App() {
 
   const handleResize = useCallback(
     debounce(() => {
-      if (window.innerWidth > 1279) setIsMenuOpen(false);
+      if (window.innerWidth >= desktopWidth) setIsMenuOpen(false);
     }, 100),
     []
   );
@@ -76,11 +77,9 @@ function App() {
       .getContent()
       .then((res) => {
         if (res.authorized === false) {
-          console.log("cookie failure");
           setLoggedIn(false);
           setIsInitialized(true);
         } else if (res.authorized === true) {
-          console.log("cookie success!");
           setLoggedIn(true);
         }
       })
@@ -141,6 +140,12 @@ function App() {
       })
       .catch((err) => {
         console.log(err.message);
+        localStorage.removeItem("searchSaved");
+        localStorage.removeItem("isShortSaved");
+        localStorage.removeItem("search");
+        localStorage.removeItem("isShort");
+        localStorage.removeItem("moviesSaved");
+        localStorage.removeItem("movies");
       });
   }
 

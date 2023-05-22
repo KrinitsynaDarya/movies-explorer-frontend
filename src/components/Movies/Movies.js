@@ -8,6 +8,12 @@ import apiMovies from "../../utils/MoviesApi";
 import Preloader from "../Preloader/Preloader";
 import mainApi from "../../utils/MainApi";
 import SearchMovies from "../../utils/SearchMovies";
+import {
+  DESKTOP,
+  TABLET,
+  MOBILE,
+  SERVER_ERROR_MESSAGE,
+} from "../../utils/ProjectConstants";
 
 function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
   const [movies, setMovies] = useState([]);
@@ -18,8 +24,11 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [isLoading, setIsLoading] = useState(false);
   const [serverError, setServerError] = useState(null);
-
   const [savedMovies, setSavedMovies] = useState([]);
+
+  const { cards: desktopCards } = DESKTOP;
+  const { width: tabletWidth, cards: tabletCards } = TABLET;
+  const { width: mobileWidth, cards: mobileCards } = MOBILE;
 
   React.useEffect(() => {
     //запрашиваем с сервера свежие сохраненные фильмы
@@ -31,9 +40,7 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
         //throw new Error("");
       })
       .catch((err) => {
-        setServerError(
-          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
-        );
+        setServerError(SERVER_ERROR_MESSAGE);
       })
       .finally(() => {});
   }, []);
@@ -63,11 +70,7 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
           setSavedMovies([savedMovie, ...savedMovies]);
           //throw new Error("");
         })
-        .catch((err) => {
-          /* setServerError(
-            "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
-          );*/
-        })
+        .catch((err) => {})
         .finally(() => {});
     } else {
       // находим _id фильма в нашей базе
@@ -80,11 +83,7 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
           setSavedMovies(savedMovies.filter((i) => i.movieId !== movie.id));
           //throw new Error("");
         })
-        .catch((err) => {
-          setServerError(
-            "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
-          );
-        })
+        .catch((err) => {})
         .finally(() => {});
     }
   }
@@ -111,7 +110,6 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
   }
 
   const fetchMovies = useCallback(() => {
-    // const savedMovies = localStorage.getItem("movies");
     setIsLoading(true);
     apiMovies
       .getInitialCards()
@@ -121,9 +119,7 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
         //throw new Error("");
       })
       .catch((err) => {
-        setServerError(
-          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
-        );
+        setServerError(SERVER_ERROR_MESSAGE);
       })
       .finally(() => {
         setIsLoading(false);
@@ -170,7 +166,12 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
   }, [filterString, movies, isShort]);
 
   const filmsToRender = useMemo(() => {
-    const filmsCount = screenWidth < 768 ? 5 : screenWidth < 1280 ? 8 : 12;
+    const filmsCount =
+      screenWidth <= mobileWidth
+        ? mobileCards
+        : screenWidth <= tabletWidth
+        ? tabletCards
+        : desktopCards;
     return filteredFilms.slice(0, filmsCount * page);
   }, [filteredFilms, page, screenWidth]);
 
