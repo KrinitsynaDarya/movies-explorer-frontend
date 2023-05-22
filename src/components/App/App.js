@@ -24,6 +24,7 @@ function App() {
   const [isShortFilm, setIsShortFilm] = React.useState(true);
   const [errorMessage, setErrorMessage] = React.useState(false);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [isInitialized, setIsInitialized] = React.useState(false);
 
   React.useEffect(() => {
     tokenCheck();
@@ -35,6 +36,7 @@ function App() {
       .getUserInfo()
       .then((userData) => {
         setCurrentUser(userData);
+        setIsInitialized(true);
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
@@ -79,12 +81,14 @@ function App() {
         } else if (res.authorized === true) {
           console.log("cookie success!");
           setLoggedIn(true);
+          setIsInitialized(true);
         }
       })
       .catch((err) => {
         setLoggedIn(false);
         console.log(err.message);
-      });
+      })
+      .finally(() => {});
   }
 
   function handleUpdateUser(userData) {
@@ -137,7 +141,7 @@ function App() {
       });
   }
 
-  return (
+  return !isInitialized ? null : (
     <CurrentUserContext.Provider value={currentUser}>
       <>
         <Routes>
