@@ -108,7 +108,7 @@ function App() {
       .then((res) => {
         if (res) {
           setErrorMessage(null);
-          navigate("/signin", { replace: true });
+          navigate("/movies", { replace: true });
         }
       })
       .catch((err) => {
