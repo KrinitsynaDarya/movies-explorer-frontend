@@ -141,7 +141,6 @@ function App() {
         localStorage.removeItem("isShortSaved");
         localStorage.removeItem("search");
         localStorage.removeItem("isShort");
-        //localStorage.removeItem("moviesSaved");
         localStorage.removeItem("movies");
       })
       .catch((err) => {
@@ -200,6 +199,7 @@ function App() {
                 errorMessage={errorMessage}
                 setErrorMessage={setErrorMessage}
                 infoMessage={infoMessage}
+                setInfoMessage={setInfoMessage}
               />
             } /* страница с профилем пользователя */
           />
