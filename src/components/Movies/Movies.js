@@ -43,7 +43,7 @@ function Movies({
       .getSavedMovies()
       .then((movies) => {
         setSavedMovies(movies);
-        //throw new Error("");
+        throw new Error("");
       })
       .catch((err) => {
         setServerError(SERVER_ERROR_MESSAGE);
@@ -74,7 +74,6 @@ function Movies({
         })
         .then((savedMovie) => {
           setSavedMovies([savedMovie, ...savedMovies]);
-          throw new Error("");
         })
         .catch((err) => {
           setIsInfoToolTipOpen(true);
@@ -90,7 +89,6 @@ function Movies({
         .then(() => {
           localStorage.setItem("movies", JSON.stringify(movies));
           setSavedMovies(savedMovies.filter((i) => i.movieId !== movie.id));
-          //throw new Error("");
         })
         .catch((err) => {
           setIsInfoToolTipOpen(true);
