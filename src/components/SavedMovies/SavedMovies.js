@@ -19,7 +19,7 @@ function SavedMovies({
   const [filterString, setFilterString] = useState("");
   const [isShort, setIsShort] = useState(true);
   const [serverError, setServerError] = useState(null);
-  // const [savedMovies, setSavedMovies] = useState([]);
+  const [savedMovies, setSavedMovies] = useState([]);
 
   function handleCheckbox() {
     setIsShort(!isShort);
@@ -29,8 +29,9 @@ function SavedMovies({
     mainApi
       .getSavedMovies()
       .then((movies) => {
-        localStorage.setItem("movies", JSON.stringify(movies));
-        //setSavedMovies(JSON.parse(localStorage.getItem("movies")));
+        //localStorage.setItem("movies", JSON.stringify(movies));
+        setSavedMovies(movies);
+        console.log(savedMovies);
         //throw new Error("");
       })
       .catch((err) => {
@@ -103,7 +104,7 @@ function SavedMovies({
               <MoviesCardList
                 isSavedPage={false}
                 isShort={isShort}
-                filmsToRender={filmsToRender}
+                filmsToRender={savedMovies}
               />
             </>
           )}

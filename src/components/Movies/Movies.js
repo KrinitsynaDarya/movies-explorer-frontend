@@ -190,7 +190,7 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
     //localStorage.setItem("movies", JSON.stringify(filtered));
 
     return filtered;
-  }, [filterString, movies, savedMovies, isShort]);
+  }, [filterString, movies, isShort]);
 
   const filmsToRender = useMemo(() => {
     const filmsCount = screenWidth < 768 ? 5 : screenWidth < 1280 ? 8 : 12;
