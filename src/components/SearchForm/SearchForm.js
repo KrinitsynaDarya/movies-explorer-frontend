@@ -13,7 +13,7 @@ function SearchForm({
   setInputString,
 }) {
   const [error, setError] = React.useState(null);
-  const [isValid, setIsValid] = React.useState(false);
+  const [isValid, setIsValid] = React.useState(true);
 
   const handleSubmit = (e) => {
     e.preventDefault();
