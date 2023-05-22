@@ -41,7 +41,7 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
 
   function handleSaveMovie(movie) {
     console.log("simple check");
-    console.log(movie);
+    console.log(movie.image.formats.thumbnail.url);
     const isLiked = savedMovies.some((i) => i.movieId === movie.id);
     /* if (!isLiked) {
       mainApi
