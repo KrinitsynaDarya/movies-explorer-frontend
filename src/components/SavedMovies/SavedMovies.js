@@ -63,19 +63,19 @@ function SavedMovies({
     if (!filterString) {
       return [];
     }
-    /* const filtered = savedMovies.filter((movie) => {
+    const filtered = savedMovies.filter((movie) => {
       const nameRU = savedMovies.nameRU.toUpperCase();
       if (isShort && savedMovies.duration > 40) {
         return false;
       }
       return nameRU.includes(filterString.toUpperCase());
-    });*/
+    });
 
     localStorage.setItem("searchSaved", filterString);
     localStorage.setItem("isShortSaved", String(isShort));
     //localStorage.setItem("movies", JSON.stringify(filtered));
 
-    return savedMovies;
+    return filtered;
   }, [filterString, savedMovies, isShort]);
 
   const filmsToRender = useMemo(() => {
