@@ -74,10 +74,10 @@ function App() {
       .getContent()
       .then((res) => {
         if (res.authorized === false) {
-          console.log("loserrr");
+          console.log("cookie success");
           setLoggedIn(false);
         } else if (res.authorized === true) {
-          console.log("winnerr!");
+          console.log("cookie failure!");
           setLoggedIn(true);
         }
       })
