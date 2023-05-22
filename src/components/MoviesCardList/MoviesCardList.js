@@ -6,6 +6,7 @@ function MoviesCardList({
   isSavedPage,
   filmsToRender,
   handleSaveMovie,
+  handleDeleteMovie,
   savedMovies,
 }) {
   console.log(`isSavedPage: ${isSavedPage}`);
@@ -19,6 +20,7 @@ function MoviesCardList({
             isSavedPage={isSavedPage}
             savedMovies={savedMovies}
             handleSaveMovie={handleSaveMovie}
+            handleDeleteMovie={handleDeleteMovie}
           />
         );
       })}
