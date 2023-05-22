@@ -77,7 +77,7 @@ function App() {
           setLoggedIn(false);
         } else if (res.authorized === true) {
           setLoggedIn(true);
-          navigate("/", { replace: true });
+          //navigate("/", { replace: true });
         }
       })
       .catch((err) => {
