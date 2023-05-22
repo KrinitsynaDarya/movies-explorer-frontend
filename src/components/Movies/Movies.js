@@ -92,7 +92,22 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
         .finally(() => {});
     }
   }
-  function handleDeleteMovie() {}
+  function handleDeleteMovie(movieId) {
+    console.log(`movieId? ${movieId}`);
+    mainApi
+      .removeMovie(movieId)
+      .then(() => {
+        localStorage.setItem("movies", JSON.stringify(movies));
+        setSavedMovies(savedMovies.filter((i) => i.movieId !== movieId));
+        //throw new Error("");
+      })
+      .catch((err) => {
+        setServerError(
+          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
+        );
+      })
+      .finally(() => {});
+  }
 
   function debounce(func, timeout = 300) {
     let timer;
@@ -174,7 +189,7 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
     //localStorage.setItem("movies", JSON.stringify(filtered));
 
     return filtered;
-  }, [filterString, movies, isShort]);
+  }, [filterString, movies, savedMovies, isShort]);
 
   const filmsToRender = useMemo(() => {
     const filmsCount = screenWidth < 768 ? 5 : screenWidth < 1280 ? 8 : 12;
