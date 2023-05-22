@@ -40,10 +40,8 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
   }, []);
 
   function handleSaveMovie(movie) {
-    console.log("simple check");
-    console.log(movie.image.formats.thumbnail.url);
     const isLiked = savedMovies.some((i) => i.movieId === movie.id);
-    /* if (!isLiked) {
+    if (!isLiked) {
       mainApi
         .saveMovie({
           country: movie.country, // страна создания фильма. Обязательное поле-строка.
@@ -53,7 +51,7 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
           description: movie.description, // описание фильма. Обязательное поле-строка.
           image: `https://api.nomoreparties.co${movie.image.url}`, // ссылка на постер к фильму. Обязательное поле-строка. Запишите её URL-адресом.
           trailerLink: movie.trailerLink, // ссылка на трейлер фильма. Обязательное поле-строка. Запишите её URL-адресом.
-          thumbnail: `https://api.nomoreparties.co${movie.thumbnail.url}`, // миниатюрное изображение постера к фильму. Обязательное поле-строка. Запишите её URL-адресом.
+          thumbnail: `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`, // миниатюрное изображение постера к фильму. Обязательное поле-строка. Запишите её URL-адресом.
           owner: movie.owner, // _id пользователя, который сохранил фильм. Обязательное поле.
           movieId: movie.id, // id фильма, который содержится в ответе сервиса MoviesExplorer. Обязательное поле.
           nameRU: movie.nameRU, // название фильма на русском языке. Обязательное поле-строка.
@@ -64,14 +62,14 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
           //throw new Error("");
         })
         .catch((err) => {
-           setServerError(
+          /* setServerError(
             "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
-          );
+          );*/
         })
         .finally(() => {});
     } else {
       //
-    }*/
+    }
   }
   function handleDeleteMovie() {}
 
