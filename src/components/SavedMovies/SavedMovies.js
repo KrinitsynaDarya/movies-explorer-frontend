@@ -87,6 +87,23 @@ function SavedMovies({
     setFilterString(inputString);
   };
 
+  function handleDeleteMovie(movieId) {
+    console.log(`movieId? ${movieId}`);
+    mainApi
+      .removeMovie(movieId)
+      .then(() => {
+        localStorage.setItem("movies", JSON.stringify(movies));
+        setSavedMovies(savedMovies.filter((i) => i.movieId !== movieId));
+        //throw new Error("");
+      })
+      .catch((err) => {
+        setServerError(
+          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
+        );
+      })
+      .finally(() => {});
+  }
+
   return (
     <Layout loggedIn={loggedIn} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu}>
       <section className="movies">
@@ -106,6 +123,7 @@ function SavedMovies({
           ) : (
             <>
               <MoviesCardList
+                handleDeleteMovie={handleDeleteMovie}
                 isSavedPage={true}
                 isShort={isShort}
                 filmsToRender={filmsToRender}

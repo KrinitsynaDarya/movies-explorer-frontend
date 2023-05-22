@@ -1,18 +1,15 @@
 import React from "react";
 import "./MoviesCard.css";
-//import CurrentUserContext from "../contexts/CurrentUserContext";
 
 function MoviesCard({
   card,
   handleSaveMovie,
   handleDeleteMovie,
   isSavedPage,
-  // savedCards,
   savedMovies,
 }) {
   console.log(`isSavedPage card url: ${card.image}`);
-  // const currentUser = React.useContext(CurrentUserContext);
-  //const isOwn = card.owner._id === currentUser._id;
+
   function toHoursAndMinutes(totalMinutes) {
     const hours = Math.floor(totalMinutes / 60);
     const minutes = totalMinutes % 60;
@@ -24,7 +21,10 @@ function MoviesCard({
     handleSaveMovie(card);
   }
 
-  //const isLiked = savedCards.some((i) => i.id === card.id);
+  function handleDeleteClick() {
+    handleDeleteMovie(card);
+  }
+
   const isLiked = savedMovies
     ? savedMovies.some((i) => i.movieId === card.id)
     : false;
@@ -44,7 +44,7 @@ function MoviesCard({
           <button
             type="button"
             className="card__delete-button"
-            /* onClick={handleDeleteMovie}*/
+            onClick={handleDeleteClick}
           />
         ) : (
           <button
