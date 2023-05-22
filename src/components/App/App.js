@@ -78,10 +78,10 @@ function App() {
         if (res.authorized === false) {
           console.log("cookie failure");
           setLoggedIn(false);
+          setIsInitialized(true);
         } else if (res.authorized === true) {
           console.log("cookie success!");
           setLoggedIn(true);
-          setIsInitialized(true);
         }
       })
       .catch((err) => {
