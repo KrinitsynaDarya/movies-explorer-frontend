@@ -98,6 +98,7 @@ function App() {
         setCurrentUser(userData);
       })
       .catch((err) => {
+        setErrorMessage(`Ошибка: ${err}`);
         console.log(`Ошибка: ${err}`);
       })
       .finally(() => {});
