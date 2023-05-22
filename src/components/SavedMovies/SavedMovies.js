@@ -24,8 +24,27 @@ function SavedMovies({
   function handleCheckbox() {
     setIsShort(!isShort);
   }
-  React.useEffect(() => {
+  /* React.useEffect(() => {
     //запрашиваем с сервера свежие сохраненные фильмы
+    mainApi
+      .getSavedMovies()
+      .then((movies) => {
+        //localStorage.setItem("movies", JSON.stringify(movies));
+        localStorage.setItem("moviesSaved", JSON.stringify(movies));
+        setSavedMovies(JSON.parse(localStorage.getItem("moviesSaved")));
+
+        //setSavedMovies(movies);
+        //throw new Error("");
+      })
+      .catch((err) => {
+        setServerError(
+          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
+        );
+      })
+      .finally(() => {});
+  }, []);*/
+
+  const fetchSavedMovies = useCallback(() => {
     mainApi
       .getSavedMovies()
       .then((movies) => {
@@ -45,6 +64,7 @@ function SavedMovies({
   }, []);
 
   React.useEffect(() => {
+    fetchSavedMovies();
     const savedsSearch = localStorage.getItem("searchSaved");
     const savedIsShort = localStorage.getItem("isShortSaved");
 
