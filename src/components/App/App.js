@@ -74,8 +74,10 @@ function App() {
       .getContent()
       .then((res) => {
         if (res.authorized === false) {
+          console.log("loserrr");
           setLoggedIn(false);
         } else if (res.authorized === true) {
+          console.log("winnerr!");
           setLoggedIn(true);
         }
       })
