@@ -87,13 +87,13 @@ function SavedMovies({
     setFilterString(inputString);
   };
 
-  function handleDeleteMovie(movieId) {
-    console.log(`movieId? ${movieId}`);
+  function handleDeleteMovie(movie) {
+    console.log(`movieId? ${movie._id}`);
     mainApi
-      .removeMovie(movieId)
+      .removeMovie(movie._id)
       .then(() => {
         localStorage.setItem("movies", JSON.stringify(movies));
-        setSavedMovies(savedMovies.filter((i) => i.movieId !== movieId));
+        setSavedMovies(savedMovies.filter((i) => i._id !== movie._id));
         //throw new Error("");
       })
       .catch((err) => {
