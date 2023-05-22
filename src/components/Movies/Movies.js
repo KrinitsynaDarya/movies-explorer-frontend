@@ -143,7 +143,7 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
     }
 
     if (savedIsShort) {
-      setIsShort(savedIsShort === true);
+      setIsShort(savedIsShort === "true");
     }
   }, []);
 
