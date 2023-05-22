@@ -157,6 +157,7 @@ function App() {
             path="/movies"
             element={
               <ProtectedRouteElement
+                tokenCheck={tokenCheck}
                 loggedIn={loggedIn}
                 element={Movies}
                 isMenuOpen={isMenuOpen}
