@@ -41,8 +41,8 @@ class Api {
     }).then((res) => this._checkResponse(res));
   }
 
-  deleteCard(cardId) {
-    return fetch(`${this._baseUrl}/cards/${cardId}`, {
+  removeMovie(movieId) {
+    return fetch(`${this._baseUrl}/cards/${movieId}`, {
       method: "DELETE",
       headers: this._headers,
       credentials: "include", // теперь куки посылаются вместе с запросом

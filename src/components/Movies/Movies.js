@@ -40,6 +40,7 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
   }, []);
 
   function handleSaveMovie(movie) {
+    console.log(movie);
     const isLiked = savedMovies.some((i) => i.movieId === movie.id);
     if (!isLiked) {
       mainApi
@@ -68,7 +69,22 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
         })
         .finally(() => {});
     } else {
+      // находим _id фильма в нашей базе
+      const movieId = savedMovies.find((i) => i.movieId === movie.id)._id;
       //
+      mainApi
+        .removeMovie(movieId)
+        .then(() => {
+          localStorage.setItem("movies", JSON.stringify(movies));
+          setSavedMovies(savedMovies.filter((i) => i.movieId !== movieId));
+          //throw new Error("");
+        })
+        .catch((err) => {
+          setServerError(
+            "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
+          );
+        })
+        .finally(() => {});
     }
   }
   function handleDeleteMovie() {}
