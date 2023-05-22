@@ -60,9 +60,9 @@ function SavedMovies({
     if (!filterString) {
       return [];
     }
-    const filtered = movies.filter((movie) => {
-      const nameRU = movie.nameRU.toUpperCase();
-      if (isShort && movie.duration > 40) {
+    const filtered = savedMovies.filter((movie) => {
+      const nameRU = savedMovies.nameRU.toUpperCase();
+      if (isShort && savedMovies.duration > 40) {
         return false;
       }
       return nameRU.includes(filterString.toUpperCase());
@@ -73,7 +73,7 @@ function SavedMovies({
     //localStorage.setItem("movies", JSON.stringify(filtered));
 
     return filtered;
-  }, [filterString, movies, isShort]);
+  }, [filterString, savedMovies, isShort]);
 
   const filmsToRender = useMemo(() => {
     return filteredFilms;
@@ -104,7 +104,7 @@ function SavedMovies({
               <MoviesCardList
                 isSavedPage={false}
                 isShort={isShort}
-                filmsToRender={savedMovies}
+                filmsToRender={filmsToRender}
               />
             </>
           )}
