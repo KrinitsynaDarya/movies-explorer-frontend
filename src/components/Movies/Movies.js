@@ -174,7 +174,6 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
 
     localStorage.setItem("search", filterString);
     localStorage.setItem("isShort", String(isShort));
-    //localStorage.setItem("movies", JSON.stringify(filtered));
 
     return filtered;
   }, [filterString, movies, isShort]);

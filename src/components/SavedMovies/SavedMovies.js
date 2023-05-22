@@ -7,13 +7,7 @@ import PageContainer from "../PageContainer/PageContainer";
 import "./SavedMovies.css";
 import mainApi from "../../utils/MainApi";
 
-function SavedMovies({
-  loggedIn,
-  isMenuOpen,
-  toggleMenu,
-  // handleCheckbox,
-  isShortFilm,
-}) {
+function SavedMovies({ loggedIn, isMenuOpen, toggleMenu }) {
   const [inputString, setInputString] = useState("");
   const [filterString, setFilterString] = useState(null);
   const [isShort, setIsShort] = useState(true);
@@ -69,7 +63,6 @@ function SavedMovies({
 
     localStorage.setItem("searchSaved", filterString);
     localStorage.setItem("isShortSaved", String(isShort));
-    //localStorage.setItem("movies", JSON.stringify(filtered));
 
     return filtered;
   }, [filterString, savedMovies, isShort]);
