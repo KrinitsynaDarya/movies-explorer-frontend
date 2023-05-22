@@ -133,9 +133,15 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
   }, []);
 
   React.useEffect(() => {
-    fetchMovies();
+    const savedMovies = localStorage.getItem("movies");
     const savedsSearch = localStorage.getItem("search");
     const savedIsShort = localStorage.getItem("isShort");
+
+    if (savedMovies) {
+      setMovies(JSON.parse(savedMovies));
+    } else {
+      fetchMovies();
+    }
 
     if (savedsSearch) {
       setInputString(savedsSearch);
