@@ -22,6 +22,7 @@ function App() {
   const [loggedIn, setLoggedIn] = React.useState(false);
   //const [screenWidth, setScreenWidth] = React.useState(window.innerWidth);
   const [errorMessage, setErrorMessage] = React.useState(false);
+  const [infoMessage, setInfoMessage] = React.useState("");
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isInitialized, setIsInitialized] = React.useState(false);
 
@@ -99,7 +100,9 @@ function App() {
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
       })
-      .finally(() => {});
+      .finally(() => {
+        setInfoMessage("Изменение данных профиля прошло успешно!");
+      });
   }
 
   function handleRegister(name, email, password) {
@@ -191,6 +194,7 @@ function App() {
                 toggleMenu={toggleMenu}
                 errorMessage={errorMessage}
                 setErrorMessage={setErrorMessage}
+                infoMessage={infoMessage}
               />
             } /* страница с профилем пользователя */
           />

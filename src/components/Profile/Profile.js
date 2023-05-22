@@ -12,6 +12,7 @@ const Profile = ({
   toggleMenu,
   errorMessage,
   setErrorMessage,
+  infoMessage,
 }) => {
   const currentUser = React.useContext(CurrentUserContext);
   const { values, handleChange, errors, isValid, setValues, isDirty } =
@@ -84,8 +85,10 @@ const Profile = ({
             )}
           </fieldset>
           <div className="profile__buttons">
-            {errorMessage && (
-              <span className="profile__submit-error">{errorMessage}</span>
+            {(errorMessage || infoMessage) && (
+              <span className="profile__submit-error">
+                {errorMessage || infoMessage}
+              </span>
             )}
             <button
               type="submit"
