@@ -133,23 +133,23 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
   }, []);
 
   React.useEffect(() => {
-    const savedMovies = localStorage.getItem("movies");
-    const savedsSearch = localStorage.getItem("search");
-    const savedIsShort = localStorage.getItem("isShort");
+    const storedMovies = localStorage.getItem("movies");
+    const storedSearch = localStorage.getItem("search");
+    const storedIsShort = localStorage.getItem("isShort");
 
-    if (savedMovies) {
-      setMovies(JSON.parse(savedMovies));
+    if (storedMovies) {
+      setMovies(JSON.parse(storedMovies));
     } else {
       fetchMovies();
     }
 
-    if (savedsSearch) {
-      setInputString(savedsSearch);
-      setFilterString(savedsSearch);
+    if (storedSearch) {
+      setInputString(storedSearch);
+      setFilterString(storedSearch);
     }
 
-    if (savedIsShort) {
-      setIsShort(savedIsShort === "true");
+    if (storedIsShort) {
+      setIsShort(storedIsShort === "true");
     }
   }, []);
 

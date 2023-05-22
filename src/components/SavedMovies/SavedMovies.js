@@ -111,7 +111,6 @@ function SavedMovies({
     mainApi
       .removeMovie(movie._id)
       .then(() => {
-        localStorage.setItem("movies", JSON.stringify(movies));
         setSavedMovies(savedMovies.filter((i) => i._id !== movie._id));
         //throw new Error("");
       })
