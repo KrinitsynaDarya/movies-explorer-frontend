@@ -18,7 +18,7 @@ function SavedMovies({
   const [inputString, setInputString] = useState("");
   const [filterString, setFilterString] = useState(null);
   const [isShort, setIsShort] = useState(true);
-  const [serverError, setServerError] = useState(null);
+  const [serverError, setServerError] = useState("");
   const [savedMovies, setSavedMovies] = useState([]);
 
   function handleCheckbox() {
@@ -60,6 +60,7 @@ function SavedMovies({
   }, []);
 
   const filteredFilms = useMemo(() => {
+    console.log("hello mf");
     if (!filterString) {
       return [];
     }
