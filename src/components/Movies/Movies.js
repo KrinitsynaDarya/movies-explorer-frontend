@@ -7,6 +7,7 @@ import PageContainer from "../PageContainer/PageContainer";
 import apiMovies from "../../utils/MoviesApi";
 import Preloader from "../Preloader/Preloader";
 import mainApi from "../../utils/MainApi";
+import SearchMovies from "../../utils/SearchMovies";
 
 function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
   const [movies, setMovies] = useState([]);
@@ -161,18 +162,18 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
     if (!filterString) {
       return [];
     }
-    const filtered = movies.filter((movie) => {
+    /* const filtered = movies.filter((movie) => {
       const nameRU = movie.nameRU.toUpperCase();
       if (isShort && movie.duration > 40) {
         return false;
       }
       return nameRU.includes(filterString.toUpperCase());
-    });
+    });*/
 
     localStorage.setItem("search", filterString);
     localStorage.setItem("isShort", String(isShort));
 
-    return filtered;
+    return SearchMovies(movies, isShort, filterString);
   }, [filterString, movies, isShort]);
 
   const filmsToRender = useMemo(() => {
