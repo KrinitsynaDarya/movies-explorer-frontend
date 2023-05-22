@@ -1,4 +1,4 @@
-import SHORT_MOVIE_DURATION from "./ProjectConstants.js";
+import { SHORT_MOVIE_DURATION } from "./ProjectConstants.js";
 
 export default function SearchMovies(movies, isShort, filterString) {
   const filtered = movies.filter((movie) => {
