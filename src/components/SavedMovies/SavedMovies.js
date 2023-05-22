@@ -43,8 +43,9 @@ function SavedMovies({
   }, []);
 
   React.useEffect(() => {
-    const savedsSearch = localStorage.getItem("search");
-    const savedIsShort = JSON.parse(localStorage.getItem("isShort")) === true;
+    const savedsSearch = localStorage.getItem("searchSaved");
+    const savedIsShort =
+      JSON.parse(localStorage.getItem("isShortaved")) === true;
 
     if (savedsSearch) {
       setInputString(savedsSearch);
@@ -68,8 +69,8 @@ function SavedMovies({
       return nameRU.includes(filterString.toUpperCase());
     });
 
-    localStorage.setItem("search", filterString);
-    localStorage.setItem("isShort", String(isShort));
+    localStorage.setItem("searchSaved", filterString);
+    localStorage.setItem("isShortaved", String(isShort));
     //localStorage.setItem("movies", JSON.stringify(filtered));
 
     return filtered;
