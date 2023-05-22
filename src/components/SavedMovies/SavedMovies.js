@@ -14,7 +14,6 @@ function SavedMovies({
   // handleCheckbox,
   isShortFilm,
 }) {
-  const [movies, setMovies] = useState([]);
   const [inputString, setInputString] = useState("");
   const [filterString, setFilterString] = useState(null);
   const [isShort, setIsShort] = useState(true);
@@ -24,36 +23,13 @@ function SavedMovies({
   function handleCheckbox() {
     setIsShort(!isShort);
   }
-  /* React.useEffect(() => {
-    //запрашиваем с сервера свежие сохраненные фильмы
-    mainApi
-      .getSavedMovies()
-      .then((movies) => {
-        //localStorage.setItem("movies", JSON.stringify(movies));
-        localStorage.setItem("moviesSaved", JSON.stringify(movies));
-        setSavedMovies(JSON.parse(localStorage.getItem("moviesSaved")));
-
-        //setSavedMovies(movies);
-        //throw new Error("");
-      })
-      .catch((err) => {
-        setServerError(
-          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
-        );
-      })
-      .finally(() => {});
-  }, []);*/
 
   const fetchSavedMovies = useCallback(() => {
     mainApi
       .getSavedMovies()
       .then((movies) => {
-        //localStorage.setItem("movies", JSON.stringify(movies));
         localStorage.setItem("moviesSaved", JSON.stringify(movies));
         setSavedMovies(JSON.parse(localStorage.getItem("moviesSaved")));
-
-        //setSavedMovies(movies);
-        //throw new Error("");
       })
       .catch((err) => {
         setServerError(
@@ -81,7 +57,7 @@ function SavedMovies({
   const filteredFilms = useMemo(() => {
     console.log("hello mf");
     if (!filterString) {
-      return [];
+      return savedMovies;
     }
     const filtered = savedMovies.filter((movie) => {
       const nameRU = movie.nameRU.toUpperCase();
