@@ -141,7 +141,7 @@ function App() {
         localStorage.removeItem("isShortSaved");
         localStorage.removeItem("search");
         localStorage.removeItem("isShort");
-        // localStorage.removeItem("moviesSaved");
+        //localStorage.removeItem("moviesSaved");
         localStorage.removeItem("movies");
       })
       .catch((err) => {

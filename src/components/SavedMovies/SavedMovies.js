@@ -24,8 +24,9 @@ function SavedMovies({ loggedIn, isMenuOpen, toggleMenu }) {
     mainApi
       .getSavedMovies()
       .then((movies) => {
-        localStorage.setItem("moviesSaved", JSON.stringify(movies));
-        setSavedMovies(JSON.parse(localStorage.getItem("moviesSaved")));
+        //localStorage.setItem("moviesSaved", JSON.stringify(movies));
+        //setSavedMovies(JSON.parse(localStorage.getItem("moviesSaved")));
+        setSavedMovies(movies);
       })
       .catch((err) => {
         setServerError(SERVER_ERROR_MESSAGE);
