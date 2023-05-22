@@ -106,7 +106,7 @@ function SavedMovies({
           ) : (
             <>
               <MoviesCardList
-                isSavedPage={false}
+                isSavedPage={true}
                 isShort={isShort}
                 filmsToRender={filmsToRender}
               />

@@ -62,7 +62,11 @@ function MoviesCard({
         <img
           className="card__photo"
           alt={`Постер фильма ${card.nameRU}`}
-          src={`https://api.nomoreparties.co/${card.image.url}`}
+          src={
+            isSavedPage
+              ? card.image
+              : `https://api.nomoreparties.co/${card.image.url}`
+          }
         />
       </a>
     </div>
