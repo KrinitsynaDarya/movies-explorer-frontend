@@ -1,5 +1,6 @@
 import successLogo from "../../images/success-logo.svg";
 import failLogo from "../../images/fail-logo.svg";
+import "./InfoTooltip.css";
 
 function InfoTooltip({
   isSucces = false,

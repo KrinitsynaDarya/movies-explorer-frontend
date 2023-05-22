@@ -94,7 +94,7 @@ function Movies({
         })
         .catch((err) => {
           setIsInfoToolTipOpen(true);
-          setInfoToolTipMessage(err.message);
+          setInfoToolTipMessage(err.message || SERVER_ERROR_MESSAGE);
         })
         .finally(() => {});
     }
