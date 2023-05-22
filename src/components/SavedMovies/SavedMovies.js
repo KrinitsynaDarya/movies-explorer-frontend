@@ -16,7 +16,7 @@ function SavedMovies({
 }) {
   const [movies, setMovies] = useState([]);
   const [inputString, setInputString] = useState("");
-  const [filterString, setFilterString] = useState("");
+  const [filterString, setFilterString] = useState(null);
   const [isShort, setIsShort] = useState(true);
   const [serverError, setServerError] = useState(null);
   const [savedMovies, setSavedMovies] = useState([]);
