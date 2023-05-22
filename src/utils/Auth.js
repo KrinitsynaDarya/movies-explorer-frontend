@@ -15,8 +15,6 @@ export const register = (name, email, password) => {
     } else {
       return response.json().then((err) => Promise.reject(err));
     }
-
-    /*return Promise.reject(`Ошибка: ${response.status}`);*/
   });
 };
 
@@ -49,8 +47,9 @@ export const logout = () => {
   }).then((response) => {
     if (response.ok) {
       return response.json();
+    } else {
+      return response.json().then((err) => Promise.reject(err));
     }
-    return Promise.reject(`Ошибка: ${response.status}`);
   });
 };
 
@@ -64,7 +63,8 @@ export const getContent = () => {
   }).then((response) => {
     if (response.ok) {
       return response.json();
+    } else {
+      return response.json().then((err) => Promise.reject(err));
     }
-    return Promise.reject(`Ошибка: ${response.status}`);
   });
 };

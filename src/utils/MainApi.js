@@ -8,8 +8,10 @@ class Api {
   _checkResponse(res) {
     if (res.ok) {
       return res.json();
+    } else {
+      /*получаем текст ошибки с сервера*/
+      return res.json().then((err) => Promise.reject(err));
     }
-    return Promise.reject(`Ошибка: ${res.status}`);
   }
 
   getSavedMovies() {

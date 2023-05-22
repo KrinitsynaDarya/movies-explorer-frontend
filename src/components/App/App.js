@@ -94,12 +94,12 @@ function App() {
     mainApi
       .editUserInfo(userData)
       .then((userData) => {
+        setErrorMessage("");
         setInfoMessage("Изменение данных профиля прошло успешно!");
         setCurrentUser(userData);
       })
       .catch((err) => {
-        setErrorMessage(`Ошибка: ${err}`);
-        console.log(`Ошибка: ${err}`);
+        setErrorMessage(err.message);
       })
       .finally(() => {});
   }
@@ -109,7 +109,7 @@ function App() {
       .register(name, email, password)
       .then((res) => {
         if (res) {
-          setErrorMessage(null);
+          setErrorMessage("");
           handleLogin(email, password);
           navigate("/movies", { replace: true });
         }
@@ -123,7 +123,7 @@ function App() {
     auth
       .authorize(email, password)
       .then(() => {
-        setErrorMessage(null);
+        setErrorMessage("");
         setLoggedIn(true);
         navigate("/movies", { replace: true });
       })
@@ -144,7 +144,7 @@ function App() {
         localStorage.removeItem("movies");
       })
       .catch((err) => {
-        console.log(err.message);
+        setErrorMessage(err.message);
       });
   }
 
