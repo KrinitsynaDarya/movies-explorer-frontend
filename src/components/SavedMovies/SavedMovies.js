@@ -77,7 +77,6 @@ function SavedMovies({
       .removeMovie(movie._id)
       .then(() => {
         setSavedMovies(savedMovies.filter((i) => i._id !== movie._id));
-        //throw new Error("");
       })
       .catch((err) => {
         setIsInfoToolTipOpen(true);

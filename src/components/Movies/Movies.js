@@ -43,7 +43,6 @@ function Movies({
       .getSavedMovies()
       .then((movies) => {
         setSavedMovies(movies);
-        throw new Error("");
       })
       .catch((err) => {
         setServerError(SERVER_ERROR_MESSAGE);
@@ -126,7 +125,6 @@ function Movies({
       .then((initialMovies) => {
         localStorage.setItem("movies", JSON.stringify(initialMovies));
         setMovies(JSON.parse(localStorage.getItem("movies")));
-        //throw new Error("");
       })
       .catch((err) => {
         setServerError(SERVER_ERROR_MESSAGE);
