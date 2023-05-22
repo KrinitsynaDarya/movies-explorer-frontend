@@ -45,7 +45,7 @@ function SavedMovies({
   React.useEffect(() => {
     const savedsSearch = localStorage.getItem("searchSaved");
     const savedIsShort =
-      JSON.parse(localStorage.getItem("isShortaved")) === true;
+      JSON.parse(localStorage.getItem("isShortSaved")) === true;
 
     if (savedsSearch) {
       setInputString(savedsSearch);
@@ -70,7 +70,7 @@ function SavedMovies({
     });
 
     localStorage.setItem("searchSaved", filterString);
-    localStorage.setItem("isShortaved", String(isShort));
+    localStorage.setItem("isShortSaved", String(isShort));
     //localStorage.setItem("movies", JSON.stringify(filtered));
 
     return filtered;
