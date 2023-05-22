@@ -137,15 +137,15 @@ function App() {
       .logout()
       .then(() => {
         setLoggedIn(false);
-      })
-      .catch((err) => {
-        console.log(err.message);
         localStorage.removeItem("searchSaved");
         localStorage.removeItem("isShortSaved");
         localStorage.removeItem("search");
         localStorage.removeItem("isShort");
-        localStorage.removeItem("moviesSaved");
+        // localStorage.removeItem("moviesSaved");
         localStorage.removeItem("movies");
+      })
+      .catch((err) => {
+        console.log(err.message);
       });
   }
 
