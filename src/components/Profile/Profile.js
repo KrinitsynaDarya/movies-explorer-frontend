@@ -14,7 +14,7 @@ const Profile = ({
   setErrorMessage,
 }) => {
   const currentUser = React.useContext(CurrentUserContext);
-  const { values, handleChange, errors, isValid, setValues } =
+  const { values, handleChange, errors, isValid, setValues, isDirty } =
     useFormWithValidation();
   // После загрузки текущего пользователя из API
   // его данные будут использованы в управляемых компонентах.
@@ -70,6 +70,7 @@ const Profile = ({
               <input
                 name="email"
                 type="email"
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                 required
                 className={`profile__input-value ${
                   errors.email && "profile__input-value_type_error"
@@ -89,7 +90,7 @@ const Profile = ({
             <button
               type="submit"
               className="profile__button"
-              disabled={!isValid}
+              disabled={!isValid || !isDirty}
             >
               Редактировать
             </button>

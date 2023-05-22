@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useRef, useMemo } from "react";
 
 export function useForm() {
   const [values, setValues] = React.useState({});
@@ -13,10 +13,14 @@ export function useForm() {
   return { values, handleChange, setValues };
 }
 
-export function useFormWithValidation() {
+export function useFormWithValidation(initialValue = {}) {
   const [values, setValues] = React.useState({});
   const [errors, setErrors] = React.useState({});
   const [isValid, setIsValid] = React.useState(false);
+  const initialState =
+    useRef(
+      initialValue
+    ); /*храним в локальной переменной начальное состояние объекта*/
 
   const handleChange = (evt) => {
     const input = evt.target;
@@ -36,5 +40,20 @@ export function useFormWithValidation() {
     [setValues, setErrors, setIsValid]
   );
 
-  return { values, handleChange, resetFrom, errors, isValid, setValues };
+  const isDirty = useMemo(() => {
+    const initial = initialState.current;
+    /* перебора ключей объекта */
+    return Object.keys(values).some((key) => {
+      return !initial[key] || initial[key] !== values[key];
+    });
+  }, [values]);
+  return {
+    values,
+    handleChange,
+    resetFrom,
+    errors,
+    isValid,
+    setValues,
+    isDirty,
+  };
 }
