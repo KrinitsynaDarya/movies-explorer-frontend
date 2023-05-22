@@ -81,7 +81,7 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
         .removeMovie(movieId)
         .then(() => {
           localStorage.setItem("movies", JSON.stringify(movies));
-          setSavedMovies(savedMovies.filter((i) => i.movieId !== movieId));
+          setSavedMovies(savedMovies.filter((i) => i.movieId !== movie.id));
           //throw new Error("");
         })
         .catch((err) => {
