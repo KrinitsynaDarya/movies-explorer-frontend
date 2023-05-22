@@ -84,8 +84,8 @@ function SavedMovies({
       return [];
     }
     const filtered = savedMovies.filter((movie) => {
-      const nameRU = savedMovies.nameRU.toUpperCase();
-      if (isShort && savedMovies.duration > 40) {
+      const nameRU = movie.nameRU.toUpperCase();
+      if (isShort && movie.duration > 40) {
         return false;
       }
       return nameRU.includes(filterString.toUpperCase());
