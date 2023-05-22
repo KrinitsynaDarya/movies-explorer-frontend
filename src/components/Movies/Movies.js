@@ -220,7 +220,7 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
           />
           {isLoading ? (
             <Preloader />
-          ) : serverError !== "" ? (
+          ) : serverError ? (
             <p className="movies__server-error">{serverError}</p>
           ) : filmsToRender.length === 0 ? (
             <p class="movies__not-found">Ничего не найдено</p>
