@@ -108,6 +108,7 @@ function App() {
       .then((res) => {
         if (res) {
           setErrorMessage(null);
+          handleLogin(email, password);
           navigate("/movies", { replace: true });
         }
       })
