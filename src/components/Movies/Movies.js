@@ -41,7 +41,7 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
 
   function handleSaveMovie(movie) {
     console.log("simple check");
-    console.log(movie.image.url);
+    console.log(`https://api.nomoreparties.co${movie.thumbnail.url}`);
     const isLiked = savedMovies.some((i) => i.movieId === movie.id);
     /* if (!isLiked) {
       mainApi
