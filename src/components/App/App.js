@@ -11,10 +11,11 @@ import Profile from "../../components/Profile/Profile";
 import NotFoundPage from "../../components/NotFoundPage/NotFoundPage";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import ProtectedRouteElement from "../ProtectedRoute/ProtectedRoute";
+import InfoTooltip from "../InfoTooltip/InfoTooltip";
 
 import * as auth from "../../utils/Auth";
 import mainApi from "../../utils/MainApi";
-import { DESKTOP } from "../../utils/ProjectConstants";
+import { DESKTOP, SERVER_ERROR_MESSAGE } from "../../utils/ProjectConstants";
 
 function App() {
   const navigate = useNavigate();
@@ -26,6 +27,9 @@ function App() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isInitialized, setIsInitialized] = React.useState(false);
   const { width: desktopWidth } = DESKTOP;
+  const [isInfoToolTipOpen, setIsInfoToolTipOpen] = React.useState(false);
+
+  const [infoToolTipMessage, setInfoToolTipMessage] = React.useState("");
 
   React.useEffect(() => {
     tokenCheck();
@@ -85,7 +89,7 @@ function App() {
       })
       .catch((err) => {
         setLoggedIn(false);
-        console.log(err.message);
+        console.log(err.message || SERVER_ERROR_MESSAGE);
       })
       .finally(() => {});
   }
@@ -99,7 +103,7 @@ function App() {
         setCurrentUser(userData);
       })
       .catch((err) => {
-        setErrorMessage(err.message);
+        setErrorMessage(err.message || SERVER_ERROR_MESSAGE);
       })
       .finally(() => {});
   }
@@ -115,7 +119,7 @@ function App() {
         }
       })
       .catch((err) => {
-        setErrorMessage(err.message);
+        setErrorMessage(err.message || SERVER_ERROR_MESSAGE);
       });
   }
 
@@ -128,7 +132,7 @@ function App() {
         navigate("/movies", { replace: true });
       })
       .catch((err) => {
-        setErrorMessage(err.message);
+        setErrorMessage(err.message || SERVER_ERROR_MESSAGE);
       });
   }
 
@@ -146,6 +150,10 @@ function App() {
       .catch((err) => {
         setErrorMessage(err.message);
       });
+  }
+
+  function closeInfoPopup() {
+    setIsInfoToolTipOpen(false);
   }
 
   return !isInitialized ? null : (
@@ -172,6 +180,9 @@ function App() {
                 element={Movies}
                 isMenuOpen={isMenuOpen}
                 toggleMenu={toggleMenu}
+                setIsInfoToolTipOpen={setIsInfoToolTipOpen}
+                infoToolTipMessage={infoToolTipMessage}
+                setInfoToolTipMessage={setInfoToolTipMessage}
               />
             } /* страница «Фильмы» */
           />
@@ -183,6 +194,9 @@ function App() {
                 element={SavedMovies}
                 isMenuOpen={isMenuOpen}
                 toggleMenu={toggleMenu}
+                setIsInfoToolTipOpen={setIsInfoToolTipOpen}
+                infoToolTipMessage={infoToolTipMessage}
+                setInfoToolTipMessage={setInfoToolTipMessage}
               />
             } /* страница «Сохранённые фильмы» */
           />
@@ -228,6 +242,12 @@ function App() {
             element={<NotFoundPage />} /* страница не найдена */
           />
         </Routes>
+        <InfoTooltip
+          isOpen={isInfoToolTipOpen}
+          onClose={closeInfoPopup}
+          infoToolTipMessage={infoToolTipMessage}
+          setInfoToolTipMessage={setInfoToolTipMessage}
+        />
       </>
     </CurrentUserContext.Provider>
   );

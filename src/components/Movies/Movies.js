@@ -15,7 +15,14 @@ import {
   SERVER_ERROR_MESSAGE,
 } from "../../utils/ProjectConstants";
 
-function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
+function Movies({
+  loggedIn,
+  isMenuOpen,
+  toggleMenu,
+
+  setIsInfoToolTipOpen,
+  setInfoToolTipMessage,
+}) {
   const [movies, setMovies] = useState([]);
   const [inputString, setInputString] = useState("");
   const [filterString, setFilterString] = useState("");
@@ -67,9 +74,12 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
         })
         .then((savedMovie) => {
           setSavedMovies([savedMovie, ...savedMovies]);
-          //throw new Error("");
+          throw new Error("");
         })
-        .catch((err) => {})
+        .catch((err) => {
+          setIsInfoToolTipOpen(true);
+          setInfoToolTipMessage(err.message || SERVER_ERROR_MESSAGE);
+        })
         .finally(() => {});
     } else {
       // находим _id фильма в нашей базе
@@ -82,7 +92,10 @@ function Movies({ loggedIn, isMenuOpen, toggleMenu }) {
           setSavedMovies(savedMovies.filter((i) => i.movieId !== movie.id));
           //throw new Error("");
         })
-        .catch((err) => {})
+        .catch((err) => {
+          setIsInfoToolTipOpen(true);
+          setInfoToolTipMessage(err.message);
+        })
         .finally(() => {});
     }
   }

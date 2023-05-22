@@ -9,7 +9,13 @@ import mainApi from "../../utils/MainApi";
 import SearchMovies from "../../utils/SearchMovies";
 import { SERVER_ERROR_MESSAGE } from "../../utils/ProjectConstants";
 
-function SavedMovies({ loggedIn, isMenuOpen, toggleMenu }) {
+function SavedMovies({
+  loggedIn,
+  isMenuOpen,
+  toggleMenu,
+  setIsInfoToolTipOpen,
+  setInfoToolTipMessage,
+}) {
   const [inputString, setInputString] = useState("");
   const [filterString, setFilterString] = useState(null);
   const [isShort, setIsShort] = useState(true);
@@ -73,7 +79,10 @@ function SavedMovies({ loggedIn, isMenuOpen, toggleMenu }) {
         setSavedMovies(savedMovies.filter((i) => i._id !== movie._id));
         //throw new Error("");
       })
-      .catch((err) => {})
+      .catch((err) => {
+        setIsInfoToolTipOpen(true);
+        setInfoToolTipMessage(err.message || SERVER_ERROR_MESSAGE);
+      })
       .finally(() => {});
   }
 
