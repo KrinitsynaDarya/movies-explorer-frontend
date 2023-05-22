@@ -19,6 +19,10 @@ function MoviesCard({
     return `${hours}ч ${minutes}м`;
   }
 
+  function handleLikeClick() {
+    handleSaveMovie(card);
+  }
+
   //const isLiked = savedCards.some((i) => i.id === card.id);
   const isLiked = savedMovies
     ? savedMovies.some((i) => i.movieId === card.id)
@@ -39,13 +43,13 @@ function MoviesCard({
           <button
             type="button"
             className="card__delete-button"
-            onClick={handleDeleteMovie}
+            /* onClick={handleDeleteMovie}*/
           />
         ) : (
           <button
             type="button"
             className={cardLikeButtonClassName}
-            onClick={handleSaveMovie(card)}
+            onClick={handleLikeClick}
           />
         )}
       </div>
