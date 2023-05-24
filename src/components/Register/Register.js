@@ -1,24 +1,24 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import "./Register.css";
 import Layout from "../Layout/Layout";
 import Logo from "../Logo/Logo";
 import { useFormWithValidation } from "../../UserHooks/useForm";
 
-const Register = ({ onRegister, setErrorMessage, errorMessage }) => {
+const Register = ({ loggedIn, onRegister, setErrorMessage, errorMessage }) => {
   function handleSubmit(e) {
     e.preventDefault();
     const { name, email, password } = values;
     onRegister(name, email, password);
   }
 
-  const { values, handleChange, resetFrom, errors, isValid, setValues } =
-    useFormWithValidation();
+  const { values, handleChange, errors, isValid } = useFormWithValidation();
 
   React.useEffect(() => {
     setErrorMessage(null);
   }, [setErrorMessage]);
 
+  if (loggedIn) return <Navigate to="/" replace />;
   return (
     <Layout hasHeader={false} hasFooter={false}>
       <div className="register">

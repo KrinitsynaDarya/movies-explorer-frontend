@@ -1,11 +1,11 @@
 import React from "react";
 import "./Login.css";
 import { useFormWithValidation } from "../../UserHooks/useForm";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import Layout from "../Layout/Layout";
 import Logo from "../Logo/Logo";
 
-const Login = ({ onLogin, errorMessage, setErrorMessage }) => {
+const Login = ({ loggedIn, onLogin, errorMessage, setErrorMessage }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!values.email || !values.password) {
@@ -21,6 +21,7 @@ const Login = ({ onLogin, errorMessage, setErrorMessage }) => {
 
   const { values, handleChange, errors, isValid } = useFormWithValidation();
 
+  if (loggedIn) return <Navigate to="/" replace />;
   return (
     <Layout hasHeader={false} hasFooter={false}>
       <div className="login">

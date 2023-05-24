@@ -148,7 +148,7 @@ function App() {
         localStorage.removeItem("movies");
       })
       .catch((err) => {
-        setErrorMessage(err.message);
+        setErrorMessage(err.message || SERVER_ERROR_MESSAGE);
       });
   }
 
@@ -221,6 +221,7 @@ function App() {
             path="/signup"
             element={
               <Register
+                loggedIn={loggedIn}
                 onRegister={handleRegister}
                 errorMessage={errorMessage}
                 setErrorMessage={setErrorMessage}
@@ -231,6 +232,7 @@ function App() {
             path="/signin"
             element={
               <Login
+                loggedIn={loggedIn}
                 onLogin={handleLogin}
                 errorMessage={errorMessage}
                 setErrorMessage={setErrorMessage}
