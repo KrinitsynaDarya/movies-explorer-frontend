@@ -26,7 +26,7 @@ function Movies({
   const [movies, setMovies] = useState([]);
   const [inputString, setInputString] = useState("");
   const [filterString, setFilterString] = useState("");
-  const [isShort, setIsShort] = useState(true);
+  const [isShort, setIsShort] = useState(false);
   const [page, setPage] = useState(1);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [isLoading, setIsLoading] = useState(false);

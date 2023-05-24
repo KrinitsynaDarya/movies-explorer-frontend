@@ -141,8 +141,8 @@ function App() {
       .logout()
       .then(() => {
         setLoggedIn(false);
-        localStorage.removeItem("searchSaved");
-        localStorage.removeItem("isShortSaved");
+        /*localStorage.removeItem("searchSaved");
+        localStorage.removeItem("isShortSaved");*/
         localStorage.removeItem("search");
         localStorage.removeItem("isShort");
         localStorage.removeItem("movies");

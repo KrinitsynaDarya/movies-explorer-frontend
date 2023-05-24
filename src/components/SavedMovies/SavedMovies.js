@@ -18,7 +18,7 @@ function SavedMovies({
 }) {
   const [inputString, setInputString] = useState("");
   const [filterString, setFilterString] = useState(null);
-  const [isShort, setIsShort] = useState(true);
+  const [isShort, setIsShort] = useState(false);
   const [serverError, setServerError] = useState("");
   const [savedMovies, setSavedMovies] = useState([]);
 
@@ -40,7 +40,7 @@ function SavedMovies({
 
   React.useEffect(() => {
     fetchSavedMovies();
-    const savedsSearch = localStorage.getItem("searchSaved");
+    /*const savedsSearch = localStorage.getItem("searchSaved");
     const savedIsShort = localStorage.getItem("isShortSaved");
 
     if (savedsSearch) {
@@ -50,17 +50,17 @@ function SavedMovies({
 
     if (savedIsShort) {
       setIsShort(savedIsShort === "true");
-    }
+    }*/
   }, []);
 
   const filteredFilms = useMemo(() => {
     if (!filterString) {
       return savedMovies;
     }
-
+    /*
     localStorage.setItem("searchSaved", filterString);
     localStorage.setItem("isShortSaved", String(isShort));
-
+*/
     return SearchMovies(savedMovies, isShort, filterString);
   }, [filterString, savedMovies, isShort]);
 

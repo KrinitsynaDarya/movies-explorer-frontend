@@ -16,7 +16,7 @@ const Profile = ({
   setInfoMessage,
 }) => {
   const currentUser = React.useContext(CurrentUserContext);
-  const { values, handleChange, errors, isValid, setValues, isDirty } =
+  const { values, handleChange, errors, isValid, setValues } =
     useFormWithValidation(currentUser);
   React.useEffect(() => {
     setInfoMessage("");
@@ -96,7 +96,13 @@ const Profile = ({
             <button
               type="submit"
               className="profile__button"
-              disabled={!isValid || !isDirty}
+              disabled={
+                !(
+                  isValid &&
+                  (values.name !== currentUser.name ||
+                    values.email !== currentUser.email)
+                )
+              }
             >
               Редактировать
             </button>
