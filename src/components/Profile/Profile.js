@@ -17,7 +17,7 @@ const Profile = ({
 }) => {
   const currentUser = React.useContext(CurrentUserContext);
   const { values, handleChange, errors, isValid, setValues } =
-    useFormWithValidation(currentUser);
+    useFormWithValidation();
   React.useEffect(() => {
     setInfoMessage("");
   }, []);
