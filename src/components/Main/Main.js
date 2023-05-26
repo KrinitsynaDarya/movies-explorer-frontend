@@ -5,11 +5,10 @@ import AboutProject from "../../components/AboutProject/AboutProject";
 import Techs from "../../components/Techs/Techs";
 import AboutMe from "../../components/AboutMe/AboutMe";
 import Layout from "../Layout/Layout";
-import PageContainer from "../PageContainer/PageContainer";
 
 function Main({ loggedIn, isMenuOpen, toggleMenu }) {
   return (
-    <Layout loggedIn={false} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu}>
+    <Layout loggedIn={loggedIn} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu}>
       <Promo />
       <NavTab />
       <AboutProject />
@@ -19,4 +18,4 @@ function Main({ loggedIn, isMenuOpen, toggleMenu }) {
   );
 }
 
-export default Main; /*     </main>    <main className="main"> */
+export default Main;

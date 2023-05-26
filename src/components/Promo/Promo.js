@@ -1,10 +1,7 @@
-import { NavLink } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 import "./Promo.css";
 import PageContainer from "../PageContainer/PageContainer";
 
-function Promo({ loggedIn, email, onLogout }) {
-  const location = useLocation();
+function Promo() {
   return (
     <section className="promo">
       <PageContainer>

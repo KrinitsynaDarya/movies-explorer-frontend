@@ -2,7 +2,7 @@ import React from "react";
 import "./Profile.css";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import Layout from "../Layout/Layout";
-import { useFormWithValidation } from "../App/useForm";
+import { useFormWithValidation } from "../../UserHooks/useForm";
 
 const Profile = ({
   loggedIn,
@@ -10,10 +10,17 @@ const Profile = ({
   onLogout,
   isMenuOpen,
   toggleMenu,
+  errorMessage,
+  setErrorMessage,
+  infoMessage,
+  setInfoMessage,
 }) => {
   const currentUser = React.useContext(CurrentUserContext);
   const { values, handleChange, errors, isValid, setValues } =
     useFormWithValidation();
+  React.useEffect(() => {
+    setInfoMessage("");
+  }, []);
   // После загрузки текущего пользователя из API
   // его данные будут использованы в управляемых компонентах.
   React.useEffect(() => {
@@ -22,6 +29,10 @@ const Profile = ({
       email: currentUser.email,
     });
   }, [setValues, currentUser]);
+
+  React.useEffect(() => {
+    setErrorMessage(null);
+  }, [setErrorMessage]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -63,6 +74,7 @@ const Profile = ({
               <input
                 name="email"
                 type="email"
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                 required
                 className={`profile__input-value ${
                   errors.email && "profile__input-value_type_error"
@@ -76,10 +88,21 @@ const Profile = ({
             )}
           </fieldset>
           <div className="profile__buttons">
+            {(errorMessage || infoMessage) && (
+              <span className="profile__submit-error">
+                {errorMessage || infoMessage}
+              </span>
+            )}
             <button
               type="submit"
               className="profile__button"
-              disabled={!isValid}
+              disabled={
+                !(
+                  isValid &&
+                  (values.name !== currentUser.name ||
+                    values.email !== currentUser.email)
+                )
+              }
             >
               Редактировать
             </button>

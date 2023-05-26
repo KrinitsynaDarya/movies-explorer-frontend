@@ -1,19 +1,33 @@
 import searchLogo from "../../images/search-logo.svg";
-
+import React from "react";
 import "./SearchForm.css";
-import { useNavigate } from "react-router-dom";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
-function SearchForm({ handleCheckbox, isShortFilm }) {
-  const navigate = useNavigate();
+function SearchForm({
+  handleCheckbox,
+  isShort,
+  setIsShort,
+  onSubmit,
+  inputString,
+  setInputString,
+}) {
+  const [error, setError] = React.useState(null);
+  const [isValid, setIsValid] = React.useState(true);
 
-  const onSubmit = () => {
-    navigate("/", { replace: true });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(inputString);
   };
+
+  function handleSearchChange(e) {
+    setError(e.target.validationMessage);
+    setInputString(e.target.value);
+    setIsValid(e.target.closest("form").checkValidity());
+  }
 
   return (
     <section className="search-form">
-      <form className="search-form__panel" onSubmit={onSubmit}>
+      <form className="search-form__panel" onSubmit={handleSubmit}>
         <div className="search-form__search-container">
           <div className="search-form__input-container">
             <img
@@ -22,20 +36,30 @@ function SearchForm({ handleCheckbox, isShortFilm }) {
               className="search-form__logo"
             />
             <input
+              name="search"
               type="text"
               className="search-form__input"
               placeholder="Фильм"
               required
+              onChange={handleSearchChange}
+              value={inputString || ""}
             ></input>
+            {error && (
+              <p className="search-form__input-error">
+                Нужно ввести ключевое слово
+              </p>
+            )}
           </div>
-          <button type="submit" className="search-form__button">
+          <button
+            type="submit"
+            className="search-form__button"
+            disabled={!isValid}
+          >
             Найти
           </button>
         </div>
-        <FilterCheckbox
-          handleCheckbox={handleCheckbox}
-          isShortFilm={isShortFilm}
-        />
+
+        <FilterCheckbox handleCheckbox={handleCheckbox} isShort={isShort} />
       </form>
     </section>
   );

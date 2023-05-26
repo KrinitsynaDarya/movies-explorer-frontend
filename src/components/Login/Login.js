@@ -1,13 +1,11 @@
 import React from "react";
 import "./Login.css";
-import { useFormWithValidation } from "../App/useForm";
-//import headerLogo from "../../images/header-logo.svg";
-import { Link } from "react-router-dom";
+import { useFormWithValidation } from "../../UserHooks/useForm";
+import { Link, Navigate } from "react-router-dom";
 import Layout from "../Layout/Layout";
 import Logo from "../Logo/Logo";
-import PageContainer from "../PageContainer/PageContainer";
 
-const Login = ({ onLogin }) => {
+const Login = ({ loggedIn, onLogin, errorMessage, setErrorMessage }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!values.email || !values.password) {
@@ -17,8 +15,13 @@ const Login = ({ onLogin }) => {
     onLogin(email, password);
   };
 
+  React.useEffect(() => {
+    setErrorMessage(null);
+  }, [setErrorMessage]);
+
   const { values, handleChange, errors, isValid } = useFormWithValidation();
 
+  if (loggedIn) return <Navigate to="/" replace />;
   return (
     <Layout hasHeader={false} hasFooter={false}>
       <div className="login">
@@ -38,6 +41,7 @@ const Login = ({ onLogin }) => {
                 id="email"
                 name="email"
                 type="email"
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                 value={values.email || ""}
                 onChange={handleChange}
                 placeholder=""
@@ -63,6 +67,9 @@ const Login = ({ onLogin }) => {
             </div>
           </fieldset>
           <div className="login__button-container">
+            {errorMessage && (
+              <span className="login__submit-error">{errorMessage}</span>
+            )}
             <button type="submit" className="login__button" disabled={!isValid}>
               Войти
             </button>

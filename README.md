@@ -8,6 +8,8 @@
 
 IP 130.193.42.29
 
+[Ссылка на Pull Request level-3(итогового этапа)](https://github.com/KrinitsynaDarya/movies-explorer-frontend/pull/2)
+
 Макет Figma https://www.figma.com/file/ZyAyU0VFnjmeRdOX1FNZes/My-Diploma?type=design&node-id=891%3A3857&t=DrtG26UmAznxM4sf-1
 
 Макет Google Disk https://drive.google.com/file/d/13V8xFjkD4lSV_k6Tti8Bur4y_goZelxZ/view?usp=share_link

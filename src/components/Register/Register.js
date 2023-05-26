@@ -1,20 +1,24 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link, Navigate } from "react-router-dom";
 import "./Register.css";
 import Layout from "../Layout/Layout";
 import Logo from "../Logo/Logo";
-import { useFormWithValidation } from "../App/useForm";
+import { useFormWithValidation } from "../../UserHooks/useForm";
 
-const Register = ({ onRegister }) => {
+const Register = ({ loggedIn, onRegister, setErrorMessage, errorMessage }) => {
   function handleSubmit(e) {
     e.preventDefault();
     const { name, email, password } = values;
     onRegister(name, email, password);
   }
 
-  const { values, handleChange, resetFrom, errors, isValid, setValues } =
-    useFormWithValidation();
+  const { values, handleChange, errors, isValid } = useFormWithValidation();
 
+  React.useEffect(() => {
+    setErrorMessage(null);
+  }, [setErrorMessage]);
+
+  if (loggedIn) return <Navigate to="/" replace />;
   return (
     <Layout hasHeader={false} hasFooter={false}>
       <div className="register">
@@ -49,6 +53,7 @@ const Register = ({ onRegister }) => {
                 id="email"
                 name="email"
                 type="email"
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                 required
                 value={values.email || ""}
                 onChange={handleChange}
@@ -67,7 +72,7 @@ const Register = ({ onRegister }) => {
                 type="password"
                 minLength={8}
                 required
-                value={values.password}
+                value={values.password || ""}
                 onChange={handleChange}
                 placeholder=""
               />
@@ -75,6 +80,9 @@ const Register = ({ onRegister }) => {
             </div>
           </fieldset>
           <div className="register__button-container">
+            {errorMessage && (
+              <span className="register__submit-error">{errorMessage}</span>
+            )}
             <button
               type="submit"
               onSubmit={handleSubmit}

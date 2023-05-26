@@ -1,54 +1,66 @@
 import "./App.css";
 import React, { useCallback } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 
 import Movies from "../../components/Movies/Movies";
+import SavedMovies from "../SavedMovies/SavedMovies";
 import Main from "../../components/Main/Main";
 import Register from "../../components/Register/Register";
 import Login from "../../components/Login/Login";
 import Profile from "../../components/Profile/Profile";
 import NotFoundPage from "../../components/NotFoundPage/NotFoundPage";
-import "./App.css";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
-import { useNavigate } from "react-router-dom";
-import SavedMovies from "../SavedMovies/SavedMovies";
+import ProtectedRouteElement from "../ProtectedRoute/ProtectedRoute";
+import InfoTooltip from "../InfoTooltip/InfoTooltip";
+
+import * as auth from "../../utils/Auth";
+import mainApi from "../../utils/MainApi";
+import { DESKTOP, SERVER_ERROR_MESSAGE } from "../../utils/ProjectConstants";
 
 function App() {
   const navigate = useNavigate();
 
   const [currentUser, setCurrentUser] = React.useState({});
   const [loggedIn, setLoggedIn] = React.useState(false);
-  //const [screenWidth, setScreenWidth] = React.useState(window.innerWidth);
-  const [isShortFilm, setIsShortFilm] = React.useState(true);
-  function handleCheckbox() {
-    setIsShortFilm(!isShortFilm);
-  }
+  const [errorMessage, setErrorMessage] = React.useState(false);
+  const [infoMessage, setInfoMessage] = React.useState("");
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [isInitialized, setIsInitialized] = React.useState(false);
+  const { width: desktopWidth } = DESKTOP;
+  const [isInfoToolTipOpen, setIsInfoToolTipOpen] = React.useState(false);
+
+  const [infoToolTipMessage, setInfoToolTipMessage] = React.useState("");
 
   React.useEffect(() => {
-    setCurrentUser({
-      name: "Виталий",
-      email: "pochta@yandex.ru",
-      password: "12345678",
-    });
+    tokenCheck();
   }, []);
 
-  function handleRegister(email, password) {
-    navigate("/signin", { replace: true });
-  }
+  React.useEffect(() => {
+    if (loggedIn === false) return;
+    mainApi
+      .getUserInfo()
+      .then((userData) => {
+        setCurrentUser(userData);
+        setIsInitialized(true);
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      });
+  }, [loggedIn]);
 
-  function handleLogin(email, password) {
-    setLoggedIn(true);
-    navigate("/movies", { replace: true });
-  }
+  const handleResize = useCallback(
+    debounce(() => {
+      if (window.innerWidth >= desktopWidth) setIsMenuOpen(false);
+    }, 100),
+    []
+  );
 
-  function handleLogout() {
-    setLoggedIn(false);
-    navigate("/", { replace: true });
-  }
-
-  function handleUpdateUser(userData) {
-    setCurrentUser(userData);
-  }
+  React.useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [handleResize]);
 
   function debounce(func, timeout = 300) {
     let timer;
@@ -60,27 +72,91 @@ function App() {
     };
   }
 
-  const handleResize = useCallback(
-    debounce(() => {
-      if (window.innerWidth > 1279) setIsMenuOpen(false);
-    }, 100),
-    []
-  );
-
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-
   function toggleMenu() {
     setIsMenuOpen(!isMenuOpen);
   }
 
-  React.useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [handleResize]);
+  function tokenCheck() {
+    auth
+      .getContent()
+      .then((res) => {
+        if (res.authorized === false) {
+          setLoggedIn(false);
+          setIsInitialized(true);
+        } else if (res.authorized === true) {
+          setLoggedIn(true);
+        }
+      })
+      .catch((err) => {
+        setLoggedIn(false);
+        console.log(err.message || SERVER_ERROR_MESSAGE);
+      })
+      .finally(() => {});
+  }
 
-  return (
+  function handleUpdateUser(userData) {
+    mainApi
+      .editUserInfo(userData)
+      .then((userData) => {
+        setErrorMessage("");
+        setInfoMessage("Изменение данных профиля прошло успешно!");
+        setCurrentUser(userData);
+      })
+      .catch((err) => {
+        setErrorMessage(err.message || SERVER_ERROR_MESSAGE);
+      })
+      .finally(() => {});
+  }
+
+  function handleRegister(name, email, password) {
+    auth
+      .register(name, email, password)
+      .then((res) => {
+        if (res) {
+          setErrorMessage("");
+          handleLogin(email, password);
+          navigate("/movies", { replace: true });
+        }
+      })
+      .catch((err) => {
+        setErrorMessage(err.message || SERVER_ERROR_MESSAGE);
+      });
+  }
+
+  function handleLogin(email, password) {
+    auth
+      .authorize(email, password)
+      .then(() => {
+        setErrorMessage("");
+        setLoggedIn(true);
+        navigate("/movies", { replace: true });
+      })
+      .catch((err) => {
+        setErrorMessage(err.message || SERVER_ERROR_MESSAGE);
+      });
+  }
+
+  function handleLogout() {
+    auth
+      .logout()
+      .then(() => {
+        setLoggedIn(false);
+        /*localStorage.removeItem("searchSaved");
+        localStorage.removeItem("isShortSaved");*/
+        localStorage.removeItem("search");
+        localStorage.removeItem("isShort");
+        localStorage.removeItem("movies");
+      })
+      .catch((err) => {
+        setErrorMessage(err.message || SERVER_ERROR_MESSAGE);
+      });
+  }
+
+  function closeInfoPopup() {
+    setIsInfoToolTipOpen(false);
+  }
+
+  return !isInitialized ? null : (
     <CurrentUserContext.Provider value={currentUser}>
       <>
         <Routes>
@@ -94,59 +170,86 @@ function App() {
                   toggleMenu={toggleMenu}
                 />
               </>
-            } /* страница с профилем пользователя */
+            } /* главная страница */
           />
           <Route
             path="/movies"
             element={
-              <Movies
+              <ProtectedRouteElement
                 loggedIn={loggedIn}
+                element={Movies}
                 isMenuOpen={isMenuOpen}
                 toggleMenu={toggleMenu}
-                handleCheckbox={handleCheckbox}
-                isShortFilm={isShortFilm}
+                setIsInfoToolTipOpen={setIsInfoToolTipOpen}
+                infoToolTipMessage={infoToolTipMessage}
+                setInfoToolTipMessage={setInfoToolTipMessage}
               />
             } /* страница «Фильмы» */
           />
           <Route
             path="/saved-movies"
             element={
-              <SavedMovies
+              <ProtectedRouteElement
                 loggedIn={loggedIn}
+                element={SavedMovies}
                 isMenuOpen={isMenuOpen}
                 toggleMenu={toggleMenu}
-                handleCheckbox={handleCheckbox}
-                isShortFilm={isShortFilm}
+                setIsInfoToolTipOpen={setIsInfoToolTipOpen}
+                infoToolTipMessage={infoToolTipMessage}
+                setInfoToolTipMessage={setInfoToolTipMessage}
               />
             } /* страница «Сохранённые фильмы» */
           />
           <Route
             path="/profile"
             element={
-              <Profile
+              <ProtectedRouteElement
                 loggedIn={loggedIn}
+                element={Profile}
                 onUpdateUser={handleUpdateUser}
                 onLogout={handleLogout}
                 isMenuOpen={isMenuOpen}
                 toggleMenu={toggleMenu}
+                errorMessage={errorMessage}
+                setErrorMessage={setErrorMessage}
+                infoMessage={infoMessage}
+                setInfoMessage={setInfoMessage}
               />
             } /* страница с профилем пользователя */
           />
           <Route
             path="/signup"
             element={
-              <Register onRegister={handleRegister} />
+              <Register
+                loggedIn={loggedIn}
+                onRegister={handleRegister}
+                errorMessage={errorMessage}
+                setErrorMessage={setErrorMessage}
+              />
             } /* страница регистрации */
           />
           <Route
             path="/signin"
-            element={<Login onLogin={handleLogin} />} /* страница авторизации */
+            element={
+              <Login
+                loggedIn={loggedIn}
+                onLogin={handleLogin}
+                errorMessage={errorMessage}
+                setErrorMessage={setErrorMessage}
+              />
+            } /* страница авторизации */
           />
           <Route
             path="*"
-            element={<NotFoundPage />} /* страница авторизации */
+            element={<NotFoundPage />} /* страница не найдена */
           />
         </Routes>
+        <InfoTooltip
+          isOpen={isInfoToolTipOpen}
+          onClose={closeInfoPopup}
+          infoToolTipMessage={infoToolTipMessage}
+          setInfoToolTipMessage={setInfoToolTipMessage}
+        />
       </>
     </CurrentUserContext.Provider>
   );

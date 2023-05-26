@@ -1,6 +1,6 @@
 import "./NavTab.css";
 
-function NavTab({ loggedIn, email }) {
+function NavTab() {
   return (
     <nav className="navTab">
       <a href="#project" className="navTab__link">
